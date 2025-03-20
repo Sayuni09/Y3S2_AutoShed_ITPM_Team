@@ -1,0 +1,224 @@
+/* src/styles/Navbar.css */
+.admin-sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo {
+    padding: 15px 20px;
+    border-bottom: 1px solid #2d3748;
+    margin-bottom: 20px;
+  }
+  
+  .logo h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  
+  .nav-links {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item {
+    position: relative;
+    margin-bottom: 2px;
+  }
+  
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: #2d3748;
+  }
+  
+  .nav-link.active {
+    background-color: #3182ce;
+    font-weight: 500;
+  }
+  
+  .nav-icon {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+  }
+  
+  .nav-label {
+    flex: 1;
+  }
+  
+  .dropdown-arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown-arrow.expanded {
+    transform: rotate(180deg);
+  }
+  
+  .submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #2d3748;
+  }
+  
+  .submenu.expanded {
+    max-height: 500px; /* Adjust based on your needs */
+  }
+  
+  .submenu-item {
+    padding: 10px 20px 10px 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+  }
+  
+  .submenu-item:hover {
+    background-color: #3a4a61;
+  }
+  
+  .submenu-item.active {
+    background-color: #3182ce;
+    font-weight: 500;
+  }
+  
+  .submenu-dot {
+    margin-right: 8px;
+    font-size: 0.8rem;
+  }
+  
+  .user-section {
+    margin-top: auto;
+    padding: 15px 20px;
+    border-top: 1px solid #2d3748;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3182ce;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .user-info h4 {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .user-info p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #a0aec0;
+  }
+  
+  .logout-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #e53e3e;
+  }
+  
+  /* Make the main content area adjust to the sidebar */
+  .dashboard-container {
+    display: flex;
+  }
+  
+  .dashboard-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 20px;
+    background-color: #f7fafc;
+    min-height: 100vh;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .admin-sidebar {
+      width: 70px;
+      padding: 10px 0;
+    }
+    
+    .nav-label, .user-info, .dropdown-arrow {
+      display: none;
+    }
+    
+    .nav-icon {
+      margin-right: 0;
+    }
+    
+    .nav-link {
+      justify-content: center;
+      padding: 15px 0;
+    }
+    
+    .submenu-item {
+      padding: 10px 0;
+      justify-content: center;
+    }
+    
+    .logo h2 {
+      font-size: 1.2rem;
+      text-align: center;
+    }
+    
+    .dashboard-content {
+      margin-left: 70px;
+    }
+    
+    .user-avatar {
+      margin-right: 0;
+      margin: 0 auto;
+    }
+    
+    .user-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }

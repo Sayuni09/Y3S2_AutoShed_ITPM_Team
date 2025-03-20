@@ -1,0 +1,320 @@
+/* Modern styling with enhanced animations */
+.home-container {
+    min-height: 100vh;
+    min-width: 100vw;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.15) 0%, transparent 50%);
+    animation: backgroundPulse 15s ease infinite;
+    z-index: 1;
+}
+
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: particleFloat linear forwards;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.hero-section {
+    margin-bottom: 4rem;
+}
+
+.title-animate {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 0.8s ease forwards;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle-animate {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 0.8s ease 0.2s forwards;
+}
+
+.login-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+    perspective: 1000px;
+}
+
+.login-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px) rotateX(10deg);
+    animation: fadeInUp 0.8s ease forwards;
+    overflow: hidden;
+}
+
+.card-content {
+    position: relative;
+    z-index: 2;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.login-card:hover .card-shine {
+    opacity: 1;
+}
+
+.login-card:nth-child(1) { animation-delay: 0.3s; }
+.login-card:nth-child(2) { animation-delay: 0.4s; }
+.login-card:nth-child(3) { animation-delay: 0.5s; }
+.login-card:nth-child(4) { animation-delay: 0.6s; }
+
+.login-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.icon-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.login-card:hover .icon-wrapper {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.icon-wrapper svg {
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.login-card:hover .icon-wrapper svg {
+    transform: scale(1.1);
+}
+
+.card-text {
+    flex: 1;
+    text-align: left;
+}
+
+.arrow-icon {
+    color: #ffffff;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.login-card:hover .arrow-icon {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+.login-card h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.features-section {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-top: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease 0.8s forwards;
+}
+
+.feature {
+    position: relative;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.feature:hover .feature-icon {
+    transform: scale(1.2);
+}
+
+.feature h4 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.feature-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: pulse 2s infinite;
+    z-index: -1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) rotateX(10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes backgroundPulse {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0) scale(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .title-animate {
+        font-size: 2.5rem;
+    }
+    
+    .login-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .features-section {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+    }
+}
+
+/* Add mouse move effect for cards */
+.login-card {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+}

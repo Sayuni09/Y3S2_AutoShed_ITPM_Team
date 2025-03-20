@@ -1,0 +1,118 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.logo {
+    padding: 5px 20px;
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-icon {
+    color: #4b7bec;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #4b7bec;
+    letter-spacing: 1px;
+}
+
+.sidebar-nav {
+    padding: 20px 0;
+    flex: 1;
+}
+
+.nav-link {
+    padding: 12px 24px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    margin: 4px 0;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-left-color: #4b7bec;
+}
+
+.nav-link.active {
+    background-color: rgba(75, 123, 236, 0.2);
+    color: white;
+    border-left-color: #4b7bec;
+}
+
+.nav-link svg {
+    width: 20px;
+    height: 20px;
+    opacity: 0.9;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: rgba(231, 76, 60, 0.9);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+
+.logout-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+}
