@@ -34,8 +34,8 @@ const Home = ({ onLoginClick, onLicLoginClick, onLecturerLoginClick, onExaminerL
             <div className="particles"></div>
             <div className="content-wrapper">
                 <div className="hero-section">
-                    <h1 className="title-animate">Presentation Scheduling System</h1>
-                    <p className="subtitle-animate">Streamline your academic presentations with our efficient management system</p>
+                    <h1 className="title-animate">AutoShed</h1>
+                    <p className="subtitle-animate">Smart Presentation Scheduling System</p>
                 </div>
                 
                 <div className="login-cards">
@@ -88,7 +88,7 @@ const Home = ({ onLoginClick, onLicLoginClick, onLecturerLoginClick, onExaminerL
                             </div>
                             <div className="card-text">
                                 <h3>Examiner Portal</h3>
-                                <p>Access evaluation tools</p>
+                                <p>View  and Manage Presentation  Schedules</p>
                             </div>
                             <ChevronRight className="arrow-icon" size={24} />
                         </div>
