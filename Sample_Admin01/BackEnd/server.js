@@ -19,7 +19,9 @@ const licLecDetailsRoutes = require('./routes/LIC_Routes/Lic_LecDetailsRoutes');
 const licExDetailsRoutes = require('./routes/LIC_Routes/Lic_ExDetailsRoutes'); 
 const licTimeSlotsRoutes = require('./routes/LIC_Routes/LicTimeSlotsRoutes');
 const licBatchDetailsRoutes = require('./routes/LIC_Routes/Lic_BatchDetailsRoutes');
-
+const licNewSchedulesRoutes = require('./routes/LIC_Routes/LicNewSchedulesRoutes');
+const licRescheduleRoutes = require('./routes/LIC_Routes/LicRescheduleRoutes');
+const messageHistoryRoutes = require('./routes/LIC_Routes/MessageHistoryRoutes');
 
 const lecAvailabilityRoutes = require('./routes/LEC_Routes/LecAvailabilityRoutes');
 const lecNewSchedulesRoutes = require('./routes/LEC_Routes/LecNewSchedulesRoutes');
@@ -57,6 +59,10 @@ app.use('/api/lic/lecturers', licLecDetailsRoutes);
 app.use('/api/lic', licExDetailsRoutes);
 app.use('/api/lic', licTimeSlotsRoutes);
 app.use('/api/lic/batch-details', licBatchDetailsRoutes);
+app.use('/api/lic', licNewSchedulesRoutes);
+app.use('/api/lic', messageHistoryRoutes);
+app.use('/api/lic', licRescheduleRoutes);
+
 
 app.use('/api/lec/accepted', lecAcceptedRoutes); 
 app.use('/api/lec', lecRequestRoutes);
