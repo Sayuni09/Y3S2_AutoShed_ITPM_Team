@@ -12,6 +12,15 @@ const lecturerRoutes = require("./routes/lecturerRoutes");
 const licRoutes = require("./routes/licRoutes");
 const examinerRoutes = require("./routes/examinerRoutes");
 
+
+const licLecAvailabilityRoutes = require('./routes/LIC_Routes/Lic_LecAvailabilityRoutes');
+const licExAvailabilityRoutes = require('./routes/LIC_Routes/Lic_ExAvailabilityRoutes');
+const licLecDetailsRoutes = require('./routes/LIC_Routes/Lic_LecDetailsRoutes'); 
+const licExDetailsRoutes = require('./routes/LIC_Routes/Lic_ExDetailsRoutes'); 
+const licTimeSlotsRoutes = require('./routes/LIC_Routes/LicTimeSlotsRoutes');
+const licBatchDetailsRoutes = require('./routes/LIC_Routes/Lic_BatchDetailsRoutes');
+
+
 const lecAvailabilityRoutes = require('./routes/LEC_Routes/LecAvailabilityRoutes');
 const lecNewSchedulesRoutes = require('./routes/LEC_Routes/LecNewSchedulesRoutes');
 const lecAcceptedRoutes = require('./routes/LEC_Routes/LecAcceptedRoutes');
@@ -42,6 +51,12 @@ app.use("/api/lecturers", lecturerRoutes);
 app.use("/api/lic", licRoutes);
 app.use("/api/examiners", examinerRoutes);
 
+app.use('/api', licLecAvailabilityRoutes);
+app.use('/api/lic/examiner-availability', licExAvailabilityRoutes);
+app.use('/api/lic/lecturers', licLecDetailsRoutes); 
+app.use('/api/lic', licExDetailsRoutes);
+app.use('/api/lic', licTimeSlotsRoutes);
+app.use('/api/lic/batch-details', licBatchDetailsRoutes);
 
 app.use('/api/lec/accepted', lecAcceptedRoutes); 
 app.use('/api/lec', lecRequestRoutes);
