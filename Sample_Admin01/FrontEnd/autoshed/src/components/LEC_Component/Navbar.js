@@ -5,20 +5,24 @@ import {
     Search,
     Mail,
     Bell,
-    Settings,
+    //Settings,
     LogOut,
-    User
+    //User
 } from 'lucide-react';
+import LecNotification from './LecNotification';
+import LecEmail from './LecEmail';
 
 const Navbar = ({ onLogout }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [user, setUser ] = useState({ name: '', email: '' });
+    const [user, setUser] = useState({ name: '', email: '' });
+    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    const [isEmailOpen, setIsEmailOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
-            setUser ({ name: decodedToken.name, email: decodedToken.email });
+            setUser({ name: decodedToken.name, email: decodedToken.email });
         }
     }, []);
 
@@ -35,6 +39,16 @@ const Navbar = ({ onLogout }) => {
         if (onLogout) onLogout();
     };
 
+    const toggleNotifications = () => {
+        setIsNotificationOpen(!isNotificationOpen);
+        setIsEmailOpen(false);
+    };
+
+    const toggleEmails = () => {
+        setIsEmailOpen(!isEmailOpen);
+        setIsNotificationOpen(false);
+    };
+
     return (
         <nav className="navbar">
             <div className="navbar-start">
@@ -47,23 +61,38 @@ const Navbar = ({ onLogout }) => {
                 </div>
                 <div className="navbar-actions">
                     <Tooltip title="Messages">
-                        <IconButton className="navbar-icon-button">
+                        <IconButton 
+                            className="navbar-icon-button"
+                            onClick={toggleEmails}
+                        >
                             <Mail size={20} />
                             <span className="notification-badge"></span>
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Notifications">
-                        <IconButton className="navbar-icon-button">
+                        <IconButton 
+                            className="navbar-icon-button"
+                            onClick={toggleNotifications}
+                        >
                             <Bell size={20} />
                             <span className="notification-badge"></span>
                         </IconButton>
                     </Tooltip>
+                    <LecNotification 
+                        isOpen={isNotificationOpen}
+                        onClose={() => setIsNotificationOpen(false)}
+                    />
+                    <LecEmail 
+                        isOpen={isEmailOpen}
+                        onClose={() => setIsEmailOpen(false)}
+                        userEmail={user.email}
+                    />
                 </div>
                 <div className="profile-section">
-                    <div className="profile-info">
+                    {/* <div className="profile-info">
                         <div className="profile-name">{user.name || 'Lecturer'}</div>
                         <div className="profile-role">{user.email || 'No Email'}</div>
-                    </div>
+                    </div> */}
                     <Tooltip title="Profile">
                         <IconButton onClick={handleProfileMenuOpen}>
                             <Avatar 
@@ -107,14 +136,14 @@ const Navbar = ({ onLogout }) => {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                    <MenuItem onClick={handleProfileMenuClose} className="menu-item">
-                        <User  size={18} />
+                    {/* <MenuItem onClick={handleProfileMenuClose} className="menu-item">
+                        <User size={18} />
                         <span>My Profile</span>
                     </MenuItem>
                     <MenuItem onClick={handleProfileMenuClose} className="menu-item">
                         <Settings size={18} />
                         <span>Settings</span>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem onClick={handleLogout} className="menu-item logout">
                         <LogOut size={18} />
                         <span>Logout</span>
