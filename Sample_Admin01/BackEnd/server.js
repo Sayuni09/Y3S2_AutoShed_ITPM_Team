@@ -12,6 +12,13 @@ const lecturerRoutes = require("./routes/lecturerRoutes");
 const licRoutes = require("./routes/licRoutes");
 const examinerRoutes = require("./routes/examinerRoutes");
 
+const lecAvailabilityRoutes = require('./routes/LEC_Routes/LecAvailabilityRoutes');
+const lecNewSchedulesRoutes = require('./routes/LEC_Routes/LecNewSchedulesRoutes');
+const lecAcceptedRoutes = require('./routes/LEC_Routes/LecAcceptedRoutes');
+const lecRequestRoutes = require('./routes/LEC_Routes/LecRequestRoutes');
+const lecCalendarRoutes = require('./routes/LEC_Routes/LecCalendarRoutes');
+
+
 const exAvailabilityRoutes = require('./routes/EX_Routes/ExAvailabilityRoutes');
 const exNewSchedulesRoutes = require('./routes/EX_Routes/ExNewSchedulesRoutes');
 const exAcceptedRoutes = require('./routes/EX_Routes/ExAcceptedRoutes');
@@ -34,6 +41,13 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/lecturers", lecturerRoutes);
 app.use("/api/lic", licRoutes);
 app.use("/api/examiners", examinerRoutes);
+
+
+app.use('/api/lec/accepted', lecAcceptedRoutes); 
+app.use('/api/lec', lecRequestRoutes);
+app.use('/api/lec', lecCalendarRoutes);
+app.use('/api/lecturer-availability', lecAvailabilityRoutes); 
+app.use('/api/lec', lecNewSchedulesRoutes);
 
 
 app.use('/api/examiner-availability', exAvailabilityRoutes);
