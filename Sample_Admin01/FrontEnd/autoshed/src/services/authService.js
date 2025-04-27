@@ -12,7 +12,7 @@ export const loginUser = async (email, password) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Login failed. Please try again.";
+            throw new Error("Login failed. Please try again.");
         }
     }
 };
