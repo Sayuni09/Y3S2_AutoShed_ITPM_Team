@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar as Clock, MapPin, BookOpen, ChevronLeft, ChevronRight, Users, Calendar } from 'lucide-react';
+import { Calendar as Clock, MapPin, BookOpen, ChevronLeft, ChevronRight, Users} from 'lucide-react';
 import '../../styles/EX_Styles/ExamCalendar.css';
 import ExCalendarService from '../../services/EX_Services/ExCalendarService';
 

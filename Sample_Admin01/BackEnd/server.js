@@ -13,6 +13,14 @@ const licRoutes = require("./routes/licRoutes");
 const examinerRoutes = require("./routes/examinerRoutes");
 
 
+
+const lecAvailabilityRoutes = require('./routes/LEC_Routes/LecAvailabilityRoutes');
+const lecNewSchedulesRoutes = require('./routes/LEC_Routes/LecNewSchedulesRoutes');
+const lecAcceptedRoutes = require('./routes/LEC_Routes/LecAcceptedRoutes');
+const lecRequestRoutes = require('./routes/LEC_Routes/LecRequestRoutes');
+const lecCalendarRoutes = require('./routes/LEC_Routes/LecCalendarRoutes');
+
+
 const licLecAvailabilityRoutes = require('./routes/LIC_Routes/Lic_LecAvailabilityRoutes');
 const licExAvailabilityRoutes = require('./routes/LIC_Routes/Lic_ExAvailabilityRoutes');
 const licLecDetailsRoutes = require('./routes/LIC_Routes/Lic_LecDetailsRoutes'); 
@@ -22,12 +30,6 @@ const licBatchDetailsRoutes = require('./routes/LIC_Routes/Lic_BatchDetailsRoute
 const licNewSchedulesRoutes = require('./routes/LIC_Routes/LicNewSchedulesRoutes');
 const licRescheduleRoutes = require('./routes/LIC_Routes/LicRescheduleRoutes');
 const messageHistoryRoutes = require('./routes/LIC_Routes/MessageHistoryRoutes');
-
-const lecAvailabilityRoutes = require('./routes/LEC_Routes/LecAvailabilityRoutes');
-const lecNewSchedulesRoutes = require('./routes/LEC_Routes/LecNewSchedulesRoutes');
-const lecAcceptedRoutes = require('./routes/LEC_Routes/LecAcceptedRoutes');
-const lecRequestRoutes = require('./routes/LEC_Routes/LecRequestRoutes');
-const lecCalendarRoutes = require('./routes/LEC_Routes/LecCalendarRoutes');
 
 
 const exAvailabilityRoutes = require('./routes/EX_Routes/ExAvailabilityRoutes');
@@ -53,6 +55,13 @@ app.use("/api/lecturers", lecturerRoutes);
 app.use("/api/lic", licRoutes);
 app.use("/api/examiners", examinerRoutes);
 
+app.use('/api/lec/accepted', lecAcceptedRoutes); 
+app.use('/api/lec', lecRequestRoutes);
+app.use('/api/lec', lecCalendarRoutes);
+app.use('/api/lecturer-availability', lecAvailabilityRoutes); 
+app.use('/api/lec', lecNewSchedulesRoutes);
+
+
 app.use('/api', licLecAvailabilityRoutes);
 app.use('/api/lic/examiner-availability', licExAvailabilityRoutes);
 app.use('/api/lic/lecturers', licLecDetailsRoutes); 
@@ -64,18 +73,21 @@ app.use('/api/lic', messageHistoryRoutes);
 app.use('/api/lic', licRescheduleRoutes);
 
 
-app.use('/api/lec/accepted', lecAcceptedRoutes); 
-app.use('/api/lec', lecRequestRoutes);
-app.use('/api/lec', lecCalendarRoutes);
-app.use('/api/lecturer-availability', lecAvailabilityRoutes); 
-app.use('/api/lec', lecNewSchedulesRoutes);
-
 
 app.use('/api/examiner-availability', exAvailabilityRoutes);
 app.use('/api/ex', exNewSchedulesRoutes); 
 app.use('/api/ex/accepted', exAcceptedRoutes);
 app.use('/api/ex', exRequestRoutes);
 app.use('/api/ex', exCalendarRoutes);
+
+
+
+
+
+
+
+
+
 
 
 const PORT = process.env.PORT || 5000;

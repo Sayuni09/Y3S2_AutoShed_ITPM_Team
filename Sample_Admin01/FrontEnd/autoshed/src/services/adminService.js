@@ -22,7 +22,7 @@ export const getAdmins = async () => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Failed to fetch admin users. Please try again.";
+            throw new Error("Failed to fetch admin users. Please try again.");
         }
     }
 };
@@ -37,7 +37,7 @@ export const addAdmin = async (adminData) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Failed to add admin. Please try again.";
+            throw new Error("Failed to add admin. Please try again.");
         }
     }
 };
@@ -52,7 +52,7 @@ export const updateAdmin = async (id, adminData) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Failed to update admin. Please try again.";
+            throw new Error("Failed to update admin. Please try again.");
         }
     }
 };
@@ -67,7 +67,7 @@ export const deleteAdmin = async (id) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Failed to delete admin. Please try again.";
+            throw new Error("Failed to delete admin. Please try again.");
         }
     }
 };
