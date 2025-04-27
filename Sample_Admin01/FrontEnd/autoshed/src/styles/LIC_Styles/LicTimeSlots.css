@@ -1,0 +1,224 @@
+/* Container Styles */
+.timeslots-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.timeslots-header {
+  margin-bottom: 2rem;
+}
+
+.timeslots-header h1 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+}
+
+/* Filters Container */
+.filters-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Search Box */
+.search-box {
+  flex: 1;
+  min-width: 300px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-box:focus-within {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+.search-box svg {
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+/* Dropdown Styles */
+.filter-dropdown,
+.module-dropdown {
+  position: relative;
+  min-width: 200px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.filter-dropdown svg,
+.module-dropdown svg {
+  color: #6b7280;
+  margin-right: 0.5rem;
+}
+
+.filter-dropdown select,
+.module-dropdown select {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* Time Slots Grid */
+.timeslots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Card Styles */
+.timeslot-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.timeslot-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Status Badge */
+.status-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+
+.status-available {
+  background-color: #10b981 !important; /* Bright green */
+  color: #ffffff; /* White text for better contrast */
+  font-weight: 600;
+}
+
+.status-booked {
+  background-color: #ef4444 !important; /* Bright red */
+  color: #ffffff; /* White text for better contrast */
+  font-weight: 600;
+}
+
+.status-confirmed {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-canceled {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+/* Card Header */
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.card-header span {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Card Details */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+}
+
+.detail-item svg {
+  color: #6b7280;
+}
+
+/* Action Button */
+.action-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-button:hover:not(.disabled) {
+  background-color: #0e543d;
+}
+
+.action-button.disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timeslots-container {
+    padding: 1rem;
+  }
+
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .search-box,
+  .filter-dropdown,
+  .module-dropdown {
+    width: 100%;
+  }
+
+  .timeslots-grid {
+    grid-template-columns: 1fr;
+  }
+}

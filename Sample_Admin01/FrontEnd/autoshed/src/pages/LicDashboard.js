@@ -1,102 +1,68 @@
-import React from "react";
-import { Bar } from 'react-chartjs-2';
+import React, { useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import Navbar from "../components/LIC_Component/Navbar";
 import Sidebar from "../components/LIC_Component/Sidebar";
-import { Users, FileText, DollarSign, CheckSquare } from 'lucide-react';
+import LicNewSchedules from "../components/LIC_Component/LicNewSchedules";
+import LicViewSchedules from "../components/LIC_Component/LicViewSchedules";
+import LicLecturersDetails from "../components/LIC_Component/LicLecturersDetails";
+import LicExaminersDetails from "../components/LIC_Component/LicExaminersDetails";
+import ExAvailability from "../components/LIC_Component/ExAvailability";
+import LecAvailability from "../components/LIC_Component/LecAvailability";
+import LicRequestRescheduls from "../components/LIC_Component/LicRequestRescheduls";
+import LicTimeSlots from "../components/LIC_Component/LicTimeSlots";
+
+
+
+import { Users, FileText, CheckSquare } from 'lucide-react';
 import "../styles/LIC_Styles/Dashboard.css";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const LicDashboard = ({ onLogout }) => {
-    const data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [
-            {
-                label: 'Premium Collected',
-                data: [12000, 19000, 30000, 50000, 20000, 30000],
-                backgroundColor: 'rgba(75, 123, 236, 0.6)',
-                borderColor: 'rgba(75, 123, 236, 1)',
-                borderWidth: 1,
-            },
-        ],
-    };
-
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    font: {
-                        size: 12,
-                        family: "'Inter', sans-serif"
-                    }
-                }
-            },
-            tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                    size: 14,
-                    family: "'Inter', sans-serif"
-                },
-                bodyFont: {
-                    size: 13,
-                    family: "'Inter', sans-serif"
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(0, 0, 0, 0.1)',
-                    drawBorder: false
-                },
-                ticks: {
-                    font: {
-                        size: 12,
-                        family: "'Inter', sans-serif"
-                    }
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    font: {
-                        size: 12,
-                        family: "'Inter', sans-serif"
-                    }
-                }
-            }
-        }
-    };
+    const [activeTab, setActiveTab] = useState("dashboard");
+    const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
 
     const cards = [
-        { title: 'Total Users', value: '1,234', icon: <Users className="card-icon" size={24} />, color: '#4b7bec' },
-        { title: 'Active Policies', value: '867', icon: <FileText className="card-icon" size={24} />, color: '#26de81' },
-        { title: 'Premium Collected', value: '₹4,56,789', icon: <DollarSign className="card-icon" size={24} />, color: '#fd9644' },
-        { title: 'Claims Processed', value: '312', icon: <CheckSquare className="card-icon" size={24} />, color: '#a55eea' }
+        { title: 'Lecturers', value: 'N/A', icon: <Users className="card-icon" size={24} />, color: '#4b7bec', tab: 'lecturers' },
+        { title: 'Examiners', value: 'N/A', icon: <Users className="card-icon" size={24} />, color: '#26de81', tab: 'examiners' },
+        { title: 'Requested Reschedules', value: 'N/A', icon: <FileText className="card-icon" size={24} />, color: '#fd9644', tab: 'requested-reschedules' },
+        { title: 'Scheduled Presentations', value: 'N/A', icon: <CheckSquare className="card-icon" size={24} />, color: '#a55eea', tab: 'schedules-view' }
     ];
 
-    return (
-        <div className="dashboard-container">
-            <Sidebar onLogout={onLogout} />
-            <div className="dashboard-content">
-                <Navbar onLogout={onLogout} />
-                <main className="main-content">
+    const handleCardClick = (tab) => {
+        setActiveTab(tab);
+        setSelectedTimeSlot(null); // Reset selected time slot when changing tabs
+    };
+
+
+    const handleBookSlot = (slot) => {
+        setSelectedTimeSlot({
+            slot_id: slot.id,
+            module_code: slot.module_code,
+            date: slot.date,
+            start_time: slot.start_time,
+            end_time: slot.end_time,
+            venue_name: slot.venue_name,
+            semester: slot.semester,
+            lecturers: slot.lecturers,
+            examiners: slot.examiners
+        });
+        setActiveTab("schedules-new");
+    };
+
+    const handleBackToTimeSlots = () => {
+        setActiveTab("time-slots");
+        setSelectedTimeSlot(null);
+    };
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case "dashboard":
+                return (
                     <div className="content-wrapper">
-                        <div className="dashboard-header">
-                            <h1>Welcome Back, John!</h1>
-                            <p>Here's your dashboard overview</p>
-                        </div>
                         <div className="dashboard-cards">
                             {cards.map((card, index) => (
-                                <div className="dashboard-card" key={index}>
+                                <div className="dashboard-card" key={index} onClick={() => handleCardClick(card.tab)}>
                                     <div className="card-icon-wrapper" style={{ backgroundColor: `${card.color}20`, color: card.color }}>
                                         {card.icon}
                                     </div>
@@ -107,22 +73,36 @@ const LicDashboard = ({ onLogout }) => {
                                 </div>
                             ))}
                         </div>
-                        <div className="chart-container">
-                            <div className="chart-header">
-                                <h2>Premium Collection Trends</h2>
-                                <div className="chart-actions">
-                                    <select className="chart-select">
-                                        <option value="6months">Last 6 Months</option>
-                                        <option value="1year">Last Year</option>
-                                        <option value="all">All Time</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="chart-wrapper">
-                                <Bar data={data} options={options} height={300} />
-                            </div>
-                        </div>
                     </div>
+                );
+            case "schedules-new":
+                return <LicNewSchedules timeSlotData={selectedTimeSlot} onBackClick={handleBackToTimeSlots} />;
+            case "schedules-view":
+                return <LicViewSchedules />;
+            case "lecturers":
+                return <LicLecturersDetails />;
+            case "examiners":
+                return <LicExaminersDetails />;
+            case "availability-lecturers":
+                return <LecAvailability />;
+            case "availability-examiners":
+                return <ExAvailability />;
+            case "requested-reschedules":
+                return <LicRequestRescheduls />;
+            case "time-slots":
+                return <LicTimeSlots onBookSlot={handleBookSlot} />;
+            default:
+                return <div>Select a tab</div>;
+        }
+    };
+
+    return (
+        <div className="dashboard-container">
+            <Sidebar onLogout={onLogout} onNavChange={setActiveTab} activeTab={activeTab} />
+            <div className="dashboard-content">
+                <Navbar onLogout={onLogout} />
+                <main className="main-content">
+                    {renderContent()}
                 </main>
             </div>
         </div>
@@ -130,3 +110,4 @@ const LicDashboard = ({ onLogout }) => {
 };
 
 export default LicDashboard;
+
