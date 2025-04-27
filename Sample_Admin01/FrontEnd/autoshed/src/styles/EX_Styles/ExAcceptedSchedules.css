@@ -1,0 +1,327 @@
+.accepted-schedules-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .header h2 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #26de81;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .status-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .search-bar:focus-within {
+    box-shadow: 0 2px 8px rgba(75, 123, 236, 0.15);
+    border-color: #4b7bec;
+  }
+  
+  .search-bar svg {
+    color: #666;
+    margin-right: 0.5rem;
+  }
+  
+  .search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+  
+  .modules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .module-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .module-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .module-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .module-header:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .module-info h3 {
+    font-size: 1.2rem;
+    color: #4b7bec;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+  }
+  
+  .module-name {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .module-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .schedule-count {
+    font-size: 0.9rem;
+    color: #666;
+    background: #f8f9fa;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .schedules-list {
+    border-top: 1px solid #e1e1e1;
+    padding: 1rem;
+  }
+  
+  .schedule-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e1e1e1;
+  }
+  
+  .schedule-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #4b7bec;
+  }
+  
+  .schedule-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .schedule-primary,
+  .schedule-secondary {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4a5568;
+  }
+  
+  .info-item svg {
+    color: #4b7bec;
+  }
+  
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #26de81;
+    font-weight: 500;
+    margin-top: 0.5rem;
+  }
+  
+  .status-indicator svg {
+    color: #26de81;
+  }
+  
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .modal-header h2 {
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .modal-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e1e1e1;
+  }
+  
+  .modal-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 1rem;
+  }
+  
+  .modal-section h3 {
+    color: #4b7bec;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    color: #4a5568;
+  }
+  
+  .detail-row svg {
+    color: #4b7bec;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+  
+  .assigned-staff {
+    flex: 1;
+  }
+  
+  .assigned-staff p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .assigned-staff ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .assigned-staff li {
+    padding: 0.25rem 0;
+    color: #4a5568;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+  
+  .reschedule-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #4b7bec;
+    color: white;
+  }
+  
+  .reschedule-btn:hover {
+    background-color: #3867d6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(75, 123, 236, 0.2);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .accepted-schedules-container {
+      padding: 1rem;
+    }
+  
+    .header {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .search-bar {
+      width: 100%;
+    }
+  
+    .schedule-primary,
+    .schedule-secondary {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }

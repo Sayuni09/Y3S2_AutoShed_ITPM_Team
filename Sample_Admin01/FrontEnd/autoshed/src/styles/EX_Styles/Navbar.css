@@ -14,6 +14,16 @@
     z-index: 100;
 }
 
+.navbar-start {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mobile-menu-button {
+    display: none !important;
+}
+
 .navbar-start h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -94,7 +104,7 @@
 .profile-section {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0px;
     padding-left: 16px;
     margin-left: 8px;
     border-left: 1px solid #e2e8f0;
@@ -148,17 +158,52 @@
         padding: 0 16px;
     }
 
-    .search-box {
-        display: none;
+    .mobile-menu-button {
+        display: flex !important;
     }
 
-    .profile-info {
-        display: none;
+    .navbar-end {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-end.mobile-menu-open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .navbar-actions {
+        width: 100%;
+        justify-content: center;
     }
 
     .profile-section {
+        width: 100%;
+        justify-content: center;
         border-left: none;
         padding-left: 0;
         margin-left: 0;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 4px;
+    }
+
+    .profile-info {
+        text-align: center;
     }
 }
