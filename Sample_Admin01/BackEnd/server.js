@@ -38,7 +38,8 @@ const exAcceptedRoutes = require('./routes/EX_Routes/ExAcceptedRoutes');
 const exRequestRoutes = require('./routes/EX_Routes/ExRequestRoutes');
 const exCalendarRoutes = require('./routes/EX_Routes/ExCalendarRoutes');
 
-
+const freeTimeSlotRoutes = require("./routes/ADMIN_Routes/freeTimeSlotRoutes");
+const moduleRoutes = require("./routes/ADMIN_Routes/moduleRoutes");
 
 
 const app = express();
@@ -81,7 +82,8 @@ app.use('/api/ex', exRequestRoutes);
 app.use('/api/ex', exCalendarRoutes);
 
 
-
+app.use("/api/free_time_slots", freeTimeSlotRoutes);
+app.use("/api/modules", moduleRoutes);
 
 
 
