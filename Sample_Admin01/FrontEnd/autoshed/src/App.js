@@ -17,6 +17,7 @@ function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showHome, setShowHome] = useState(true);
     const [loginType, setLoginType] = useState(""); // State to track login type
+    const [showViewAdmin, setShowViewAdmin] = useState(false);
 
     useEffect(() => {
         const authStatus = checkAuthStatus();
@@ -31,6 +32,7 @@ function App() {
     const handleLogout = () => {
         setIsAuthenticated(false);
         setShowHome(true);
+        setShowViewAdmin(false);
     };
 
     const handleAdminLoginClick = () => {
@@ -53,6 +55,14 @@ function App() {
         setShowHome(false);
     };
 
+    const handleViewAdminClick = () => {
+        setShowViewAdmin(true);
+    };
+
+    const handleBackToDashboard = () => {
+        setShowViewAdmin(false);
+    };
+
     return (
         <Router> {/* Wrap your application in Router */}
             <div className="app-container">
@@ -65,7 +75,12 @@ function App() {
                     />
                 ) : isAuthenticated ? (
                     loginType === "admin" ? (
-                        <AdminDashboard onLogout={handleLogout} />
+                        <AdminDashboard 
+                            onLogout={handleLogout} 
+                            onViewAdminClick={handleViewAdminClick} 
+                            showViewAdmin={showViewAdmin} // Pass showViewAdmin state
+                            onBackToDashboard={handleBackToDashboard} // Handle back action
+                        />
                     ) : loginType === "lic" ? (
                         <LicDashboard onLogout={handleLogout} />
                     ) : loginType === "lecturer" ? (
