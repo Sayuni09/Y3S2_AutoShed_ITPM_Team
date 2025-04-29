@@ -275,6 +275,9 @@ git clone https://github.com/AutoShed/AutoShed.git
 # Navigate to the project directory
 cd AutoShed
 
+# Run frontend
+npm start
+
 # Install dependencies
 npm install
 
@@ -282,24 +285,14 @@ npm install
 cp .env.example .env
 # Edit .env with your database credentials
 
-# Run database migrations
-npm run migrate
-
 # Start the development server
-npm run dev
+node server.js
 ```
 
 Visit `http://localhost:3000` to access the application.
 
 ---
 
-## <div align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Closed%20Book.png" width="25"> **License** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Closed%20Book.png" width="25"></div>
-
-<p align="center">
-  This project is licensed under the MIT License - see the LICENSE file for details.
-</p>
-
----
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Folded%20Hands.png" width="60" />
