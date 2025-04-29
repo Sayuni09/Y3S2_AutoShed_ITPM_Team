@@ -14,7 +14,7 @@ export const loginExaminer = async (email, password) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Examiner Login failed. Please try again.";
+            throw new Error("Examiner Login failed. Please try again.");
         }
     }
 };
