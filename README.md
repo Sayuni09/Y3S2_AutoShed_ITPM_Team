@@ -275,7 +275,7 @@ While initial results are promising, we recommend:
 
 ```bash
 # Clone the repository
-git clone https://github.com/AutoShed/AutoShed.git
+git clone https://github.com/AutoShed/AutoShed.git](https://github.com/Sayuni09/Y3S2_AutoShed_ITPM_Team.git
 
 # Navigate to the project directory
 cd AutoShed
