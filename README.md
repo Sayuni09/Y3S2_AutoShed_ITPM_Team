@@ -1,207 +1,185 @@
-# 🎓 AutoShed: Smart Presentation Scheduling System
+# AutoShed : Smart Presentation Scheduling System
 
-![AutoShed Banner](https://via.placeholder.com/1000x200?text=AutoShed+Smart+Presentation+Scheduling)
 
-## 📋 Project Overview
+  
+  ![AutoShed Logo](https://via.placeholder.com/ scheduling from chaos to clarity*
+  
+  [![Status](https://img.shields.io/badgebadgeQuick Overview
 
-**AutoShed** is a comprehensive smart presentation scheduling system designed specifically for higher educational institutions. The system revolutionizes traditional manual scheduling processes by introducing a logical, automated approach to coordinating academic presentations.
+AutoShed is a comprehensive smart presentation scheduling system designed specifically for higher educational institutions. The system revolutionizes traditional manual scheduling processes by introducing a logical, automated approach to coordinating academic presentations.
 
-<details>
-<summary><b>🔍 The Problem</b></summary>
+> 💡 **Consider adding an animated GIF here showing the scheduling process in action**[2][6]
+
+## 📋 Table of Contents
+
+- [The Problem](#the-problem)
+- [Our Solution](#our-solution)
+- [Core Features](#core-features)
+- [Technical Architecture](#technical-architecture)
+- [Project Impact](#project-impact)
+- [Development Approach](#development-approach)
+- [Future Recommendations](#future-recommendations)
+- [Team Members](#team-members)
+
+## 🔍 The Problem
 
 Academic institutions frequently struggle with:
-- Inefficient manual scheduling processes
-- Communication gaps between stakeholders
-- Underutilization of available resources
-- Time-consuming administrative tasks
-- Scheduling conflicts and overlaps
-</details>
 
-## ✨ Our Solution
+- 📅 Inefficient manual scheduling processes
+- 🗣️ Communication gaps between stakeholders
+- 🏢 Underutilization of available resources
+- ⏱️ Time-consuming administrative tasks
+- ⚠️ Scheduling conflicts and overlaps
 
-AutoShed transforms presentation scheduling through intelligent automation and stakeholder coordination.
+> 💡 **Consider adding an animated GIF here demonstrating the confusion of manual scheduling**[2][6]
 
-### 🛠️ Core Features
+## 💡 Our Solution
 
-<details>
-<summary><b>Role-Based Access Control</b></summary>
+AutoShed transforms presentation scheduling through an intelligent, automated system that matches availability, prevents conflicts, and keeps all stakeholders informed.
 
-- **Administrators:** Manage system users and time slots
-- **Lecturers:** Submit availability and manage assigned presentations
-- **Examiners:** Submit availability and manage assigned presentations
-- **LICs (Lecturers in Charge):** Schedule presentations and handle reschedule requests
-</details>
+> 💡 **Consider adding an animated GIF or SVG here showing the AutoShed interface in action**[3]
 
-<details>
-<summary><b>Availability Matching Logic</b></summary>
+## ✨ Core Features
 
-- Automated matching of lecturer and examiner availability
-- Conflict prevention through intelligent scheduling algorithms
-- Optimal resource allocation
-</details>
+### Role-Based Access Control
 
-<details>
-<summary><b>Multi-Channel Notifications</b></summary>
+| Role | Responsibilities |
+|------|-----------------|
+| **Administrators** | Manage system users and time slots |
+| **Lecturers** | Submit availability and manage assigned presentations |
+| **Examiners** | Submit availability and manage assigned presentations |
+| **LICs** | Schedule presentations and handle reschedule requests |
 
-- Email notifications with calendar invites
-- WhatsApp integration for immediate updates
-- Real-time communication for schedule changes
-</details>
+### Availability Matching Logic
 
-## 🏗️ Technical Architecture
+- 🧠 Automated matching of lecturer and examiner availability
+- 🛡️ Conflict prevention through intelligent scheduling algorithms
+- 📊 Optimal resource allocation
 
-```mermaid
-graph TD
-    A[Frontend: React.js] --> D[API Layer]
-    D --> B[Backend: Node.js]
-    B --> C[Database: MySQL]
-    B --> E[Email API]
-    B --> F[WhatsApp Business API]
+> 💡 **Consider adding an animated diagram showing how the matching algorithm works**[2]
+
+### Multi-Channel Notifications
+
+- 📧 Email notifications with calendar invites
+- 📱 WhatsApp integration for immediate updates
+- ⚡ Real-time communication for schedule changes
+
+## 🔧 Technical Architecture
+
+```
+┌─────────────┐      ┌─────────────┐      ┌─────────────┐
+│   Frontend  │      │   Backend   │      │  Database   │
+│   React.js  │◄────►│   Node.js   │◄────►│    MySQL    │
+└─────────────┘      └─────────────┘      └─────────────┘
+                            ▲
+                            │
+                     ┌──────┴──────┐
+                     │ Integrations│
+                     │ Email & WA  │
+                     └─────────────┘
 ```
 
-## 💻 Tech Stack
+- **Frontend**: React.js with responsive UI design
+- **Backend**: Node.js for robust server-side processing
+- **Database**: MySQL for data persistence
+- **Integrations**: Email API and WhatsApp Business API
 
-- **Frontend:** React.js with responsive UI design
-- **Backend:** Node.js for robust server-side processing
-- **Database:** MySQL for data persistence
-- **Integrations:** Email API and WhatsApp Business API
-
-## 📊 Project Impact
+## 📈 Project Impact
 
 Implementation testing has demonstrated:
-- Reduction in scheduling time from days to hours
-- Elimination of double-bookings and conflicts
-- Streamlined communication between all stakeholders
-- Improved resource utilization
-- Enhanced user satisfaction through automated notifications
+
+- ⏱️ Reduction in scheduling time from days to hours
+- 🚫 Elimination of double-bookings and conflicts
+- 🔄 Streamlined communication between all stakeholders
+- 📈 Improved resource utilization
+- 😊 Enhanced user satisfaction through automated notifications
+
+> 💡 **Consider adding an animated chart showing the improvements in time savings**[2]
 
 ## 🔄 Development Approach
 
 The system is being built in an agile framework with two sprints:
 
-<details>
-<summary><b>Sprint 1 Focus</b></summary>
+### Sprint 1 Focus
+- 🔐 User authentication and dashboard interfaces
+- 📝 Core availability submission functionality
+- 🔔 Initial notification system setup
+- ⏲️ Time slot management
 
-- User authentication and dashboard interfaces
-- Core availability submission functionality
-- Initial notification system setup
-- Time slot management
-</details>
-
-<details>
-<summary><b>Sprint 2 Focus</b></summary>
-
-- Schedule confirmation workflows
-- Advanced notification features
-- Reporting and analytics
-- Conflict resolution mechanisms
-</details>
-
-## 📱 Feature Screenshots
-
-<table>
-  <tr>
-    <td><img src="https://via.placeholder.com/250x150?text=Dashboard" alt="Dashboard" /></td>
-    <td><img src="https://via.placeholder.com/250x150?text=Scheduling+Interface" alt="Scheduling Interface" /></td>
-  </tr>
-  <tr>
-    <td><img src="https://via.placeholder.com/250x150?text=Notification+System" alt="Notification System" /></td>
-    <td><img src="https://via.placeholder.com/250x150?text=Reports+and+Analytics" alt="Reports" /></td>
-  </tr>
-</table>
-
-## 👥 Team Members and Contributions
-
-<details>
-<summary><b>IT22300164 - Ellepola E.W.P.W.M.R.S.K.</b></summary>
-
-**Focus:** Lecturer functionalities and email notification features
-- Lecturer authentication and dashboard UI
-- View scheduled presentations for lecturers
-- Availability submission form for lecturers
-- Update/delete availability functionality for lecturers
-- Shared work on LIC dashboard and authentication
-- Presentation scheduling interface
-- WhatsApp and Email notification setup
-- Schedule confirmation/reschedule request functionality for lecturers
-- Automated emails and calendar invites
-- Schedule report generation
-</details>
-
-<details>
-<summary><b>IT22590930 - Bandaranayeke E.M.T.T.</b></summary>
-
-**Focus:** Examiner functionalities and WhatsApp notification features
-- Examiner authentication and dashboard UI
-- View scheduled presentations for examiners
-- Availability submission form for examiners
-- Update/delete availability functionality for examiners
-- LIC dashboard and authentication
-- Presentation scheduling interface
-- WhatsApp and Email notification setup
-- Schedule confirmation/reschedule request functionality for examiners
-- Automated WhatsApp messages with clickable links
-- Examiner reschedule request handling for LICs
-- Schedule report generation
-</details>
-
-<details>
-<summary><b>IT22608536 - Aththanayake A.M.P.M.B</b></summary>
-
-**Focus:** Administrative functionalities and reporting
-- Admin authentication and dashboard UI
-- Lecturer management (CRUD operations)
-- LIC management (CRUD operations)
-- Examiner management (CRUD operations)
-- Time slot management interface
-- User report generation
-- Time slot report generation
-- Chart implementation
-</details>
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-```bash
-# Install Node.js and npm
-# Install MySQL
-```
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/autoshed.git
-
-# Navigate to project directory
-cd autoshed
-
-# Install dependencies
-npm install
-
-# Configure environment variables
-cp .env.example .env
-# Edit .env with your database and API credentials
-
-# Run database migrations
-npm run migrate
-
-# Start the development server
-npm run dev
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Sprint 2 Focus
+- ✅ Schedule confirmation workflows
+- 🔔 Advanced notification features
+- 📊 Reporting and analytics
+- 🔄 Conflict resolution mechanisms
 
 ## 🔮 Future Recommendations
 
 While initial results are promising, comprehensive user acceptance testing with actual stakeholders is recommended before full deployment to ensure the system meets all user needs and expectations.
 
+AutoShed represents a significant advancement in academic scheduling technology, offering solutions to longstanding challenges in higher education administration while enhancing stakeholder satisfaction through improved scheduling processes and communication mechanisms.
+
+## 👥 Team Members
+
+
+  
+    
+      
+      
+      Ellepola E. W. P. W. M. R. S. K.
+      
+      IT22300164
+    
+    
+      
+      
+      Bandaranayeke E.M.T.T.
+      
+      IT22590930
+    
+    
+      
+      
+      Aththanayake A.M.P.M.B
+      
+      IT22608536
+    
+  
+
+
+## 📋 Member Contributions
+
+### Ellepola E. W. P. W. M. R. S. K. (IT22300164)
+- 👨‍💻 Lecturer authentication and dashboard UI
+- 👁️ View scheduled presentations for lecturers
+- 📝 Availability submission form for lecturers
+- 🔄 Update/delete availability functionality
+- 📅 Scheduling interface (collaborative)
+- 📧 Email notification system with calendar invites
+- 📊 Schedule report generation
+
+> 💡 **Consider adding a GIF demo of the lecturer interface**[6]
+
+### Bandaranayeke E.M.T.T. (IT22590930)
+- 👨‍💻 Examiner authentication and dashboard UI
+- 👁️ View scheduled presentations for examiners
+- 📝 Availability submission form for examiners
+- 🔄 Update/delete availability functionality
+- 👨‍🏫 LIC dashboard and authentication
+- 📱 WhatsApp notification integration
+- 📊 Schedule report generation
+
+> 💡 **Consider adding a GIF demo of the examiner interface**[6]
+
+### Aththanayake A.M.P.M.B (IT22608536)
+- 👨‍💻 Admin authentication and dashboard UI
+- 👥 User management (CRUD operations)
+- ⏱️ Time slot management interface
+- 📊 Report generation and analytics
+- 📈 Chart implementation
+
+> 💡 **Consider adding a GIF demo of the admin interface**[6]
+
 ---
 
-<p align="center">
-  <b>Group Number:</b> 3Y2S_WE_IT_199 / 2025 • 
-  <b>Project Name:</b> AutoShed: Smart Presentation Scheduling System
-</p>
+
+  Made with ❤️ by Team 3Y2S_WE_IT_199 - 2025
