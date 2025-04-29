@@ -1,11 +1,38 @@
 # <div align="center">🎓 **AutoShed** 🎓</div>
 <div align="center">
 
-![GitHub stars](https://img.shields.io/github/stars/AutoShed/AutoShed?style=social)
-![GitHub forks](https://img.shields.io/github/forks/AutoShed/AutoShed?style=social)
-![GitHub issues](https://img.shields.io/github/issues/AutoShed/AutoShed)
-![GitHub license](https://img.shields.io/github/license/AutoShed/AutoShed)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+<p align="center">
+  <a href="https://reactjs.org/">
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  </a>
+  <a href="https://nodejs.org/">
+    <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  </a>
+  <a href="https://www.mysql.com/products/workbench/">
+    <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+  </a>
+  <a href="https://nodemailer.com/">
+    <img src="https://img.shields.io/badge/Nodemailer-0078D4?style=for-the-badge&logo=minutemailer&logoColor=white" alt="Nodemailer" />
+  </a>
+  <a href="https://green-api.com/">
+    <img src="https://img.shields.io/badge/Green_API-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Green API" />
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/AutoShed/AutoShed/graphs/commit-activity">
+    <img src="https://img.shields.io/badge/Maintained-Yes-success?style=for-the-badge&logo=github" alt="Maintenance" />
+  </a>
+  <a href="https://makeapullrequest.com">
+    <img src="https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge&logo=git" alt="PRs Welcome" />
+  </a>
+  <a href="https://github.com/ellerbrock/open-source-badges/">
+    <img src="https://img.shields.io/badge/Open_Source-❤-red?style=for-the-badge&logo=opensourceinitiative" alt="Open Source Love" />
+  </a>
+  <a href="https://twitter.com/AutoShed">
+    <img src="https://img.shields.io/twitter/follow/AutoShed?style=for-the-badge&logo=twitter&color=1DA1F2&logoColor=white" alt="Twitter Follow" />
+  </a>
+</p>
 
 <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Spiral%20Calendar.png" width="100" />
 
