@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const newUser = {
     name: "Regular User",  // Change name
     email: "user1@example.com",  // Change email
-    password: "user1234",  // Will be hashed before insertion
+    password: "",  // Will be hashed before insertion
     phone: "9876543210",  // Change phone number
     role: "user" // Change role to "admin" if needed
 };
