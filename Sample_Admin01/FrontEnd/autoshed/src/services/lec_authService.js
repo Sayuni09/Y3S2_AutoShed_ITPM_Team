@@ -14,7 +14,7 @@ export const loginLecturer = async (email, password) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "Lecturer Login failed. Please try again.";
+            throw new Error("Lecturer Login failed. Please try again.");
         }
     }
 };

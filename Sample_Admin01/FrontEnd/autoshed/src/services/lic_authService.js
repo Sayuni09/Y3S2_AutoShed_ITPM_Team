@@ -14,7 +14,7 @@ export const loginLicUser  = async (email, password) => {
         if (error.response && error.response.data && error.response.data.message) {
             throw error.response.data.message;
         } else {
-            throw "LIC Login failed. Please try again.";
+            throw new Error("LIC Login failed. Please try again.");
         }
     }
 };
