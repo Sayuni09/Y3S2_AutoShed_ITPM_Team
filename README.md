@@ -166,17 +166,22 @@ Implementation testing has demonstrated:
 
 The system is being built in an agile framework with two sprints:
 
-### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Numbers/Keycap%201.png" width="15"> **Sprint 1 Focus**
-- User authentication and dashboard interfaces
-- Core availability submission functionality
-- Initial notification system setup
-- Time slot management
+<h3>🔢 Sprint 1 Focus</h3>
+<ul>
+  <li>User authentication and dashboard interfaces</li>
+  <li>Core availability submission functionality</li>
+  <li>Initial notification system setup</li>
+  <li>Time slot management</li>
+</ul>
 
-### <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Numbers/Keycap%202.png" width="15"> **Sprint 2 Focus**
-- Schedule confirmation workflows
-- Advanced notification features
-- Reporting and analytics
-- Conflict resolution mechanisms
+<h3>🔢 Sprint 2 Focus</h3>
+<ul>
+  <li>Schedule confirmation workflows</li>
+  <li>Advanced notification features</li>
+  <li>Reporting and analytics</li>
+  <li>Conflict resolution mechanism</li>
+</ul>
+
 
 ---
 
