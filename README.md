@@ -40,26 +40,30 @@
 
 ---
 
-## <div align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Warning.png" width="25"> **The Problem** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Warning.png" width="25"></div>
+## <div align="center"><img src="https://em-content.zobj.net/source/microsoft-teams/337/warning_26a0-fe0f.png" width="25" alt="Warning">**The Problem** <img src="https://em-content.zobj.net/source/microsoft-teams/337/warning_26a0-fe0f.png" width="25" alt="Warning">
+</div>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Thinking%20Face.png" width="40" />
+  <img src="https://em-content.zobj.net/source/microsoft/379/thinking-face_1f914.png" width="40" />
 </p>
 
 Academic institutions frequently struggle with:
 
-- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Hourglass%20Done.png" width="20"> Inefficient manual scheduling processes
-- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Cross%20Mark.png" width="20"> Communication gaps between stakeholders
-- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Chart%20Decreasing.png" width="20"> Underutilization of available resources
-- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Alarm%20Clock.png" width="20"> Time-consuming administrative tasks
-- <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Collision.png" width="20"> Scheduling conflicts and overlaps
+<ul>
+  <li><img src="https://em-content.zobj.net/source/microsoft/379/hourglass-done_231b.png" width="20"> Inefficient manual scheduling processes</li>
+  <li><img src="https://em-content.zobj.net/source/microsoft/379/cross-mark_274c.png" width="20"> Communication gaps between stakeholders</li>
+  <li><img src="https://em-content.zobj.net/source/microsoft/379/chart-decreasing_1f4c9.png" width="20"> Underutilization of available resources</li>
+  <li><img src="https://em-content.zobj.net/source/microsoft/379/alarm-clock_23f0.png" width="20"> Time-consuming administrative tasks</li>
+  <li><img src="https://em-content.zobj.net/source/microsoft/379/collision_1f4a5.png" width="20"> Scheduling conflicts and overlaps</li>
+</ul>
+
 
 ---
 
 ## <div align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png" width="25"> **Our Solution** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png" width="25"></div>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Puzzle%20Piece.png" width="50" />
+  <img src="https://em-content.zobj.net/source/microsoft/379/puzzle-piece_1f9e9.png" width="50" alt="Puzzle Piece" />
 </p>
 
 AutoShed transforms presentation scheduling through innovative features and intelligent design:
@@ -108,10 +112,6 @@ Our system is built with modern technologies for performance, scalability, and u
 - **Backend**: <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" width="15"> Node.js for robust server-side processing
 - **Database**: <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Card%20File%20Box.png" width="15"> MySQL for data persistence
 - **Integrations**: <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Envelope.png" width="15"> Email API and <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Mobile%20Phone.png" width="15"> WhatsApp Business API
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/AutoShed/Readme-Assets/main/architecture-diagram.png" width="600"/>
-</p>
 
 ---
 
@@ -213,23 +213,6 @@ Responsible for administrative functionalities and reporting:
 
 </details>
 
----
-
-## <div align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Film%20Frames.png" width="25"> **Demo & Screenshots** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png" width="25"></div>
-
-<p align="center">
-<img src="https://raw.githubusercontent.com/AutoShed/Readme-Assets/main/dashboard-screenshot.png" width="400" />
-<img src="https://raw.githubusercontent.com/AutoShed/Readme-Assets/main/scheduling-screenshot.png" width="400" />
-</p>
-
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=demo_link_here">
-    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Film%20Projector.png" width="30" /> 
-    <b>Watch Demo Video</b>
-  </a>
-</div>
-
----
 
 ## <div align="center"><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Memo.png" width="25"> **Future Recommendations** <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Crystal%20Ball.png" width="25"></div>
 
