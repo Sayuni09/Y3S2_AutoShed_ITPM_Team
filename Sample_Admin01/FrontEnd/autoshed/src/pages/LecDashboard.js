@@ -1,6 +1,6 @@
 // src/pages/LecDashboard.js
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import Navbar from "../components/LEC_Component/Navbar";
@@ -13,6 +13,10 @@ import LecAcceptedSchedules from "../components/LEC_Component/LecAcceptedSchedul
 import LecConfirmedSchedules from "../components/LEC_Component/LecConfirmedSchedules";
 import LecRequestRescheduls from "../components/LEC_Component/LecRequestRescheduls";
 import { Calendar, CheckSquare, FileText, Send } from 'lucide-react';
+import LecNewScheduleService from "../services/LEC_Services/LecNewScheduleService";
+import { fetchAcceptedSchedules } from "../services/LEC_Services/LecAcceptedServices";
+import LecRequestService from "../services/LEC_Services/LecRequestService";
+import lecAvailabilityService from "../services/LEC_Services/LecAvailabilityService";
 import "../styles/LEC_Styles/Dashboard.css";
 
 
@@ -20,79 +24,102 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const LecDashboard = ({ onLogout }) => {
     const [activeTab, setActiveTab] = useState("dashboard");
+    const [newSchedulesCount, setNewSchedulesCount] = useState("N/A");
+    const [acceptedSchedulesCount, setAcceptedSchedulesCount] = useState("N/A");
+    const [reschedulesCount, setReschedulesCount] = useState("N/A");
+    const [availabilityFormsCount, setAvailabilityFormsCount] = useState("N/A");
+    const [lecturerId, setLecturerId] = useState(null);
+    const [error, setError] = useState(null);
+    
+    // Get lecturer ID from JWT token
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            try {
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                setLecturerId(decodedToken.id);
+            } catch (err) {
+                console.error("Error decoding token:", err);
+                setError("Failed to authenticate. Please login again.");
+            }
+        } else {
+            setError("Not authenticated. Please login.");
+        }
+    }, []);
+    
+    // Fetch new schedules when lecturer ID is available
+    useEffect(() => {
+        const fetchSchedules = async () => {
+            try {
+                if (lecturerId) {
+                    const schedules = await LecNewScheduleService.getLecturerSchedules(lecturerId);
+                    setNewSchedulesCount(schedules.length.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching schedules:", error);
+                setNewSchedulesCount("Error");
+            }
+        };
 
-    // const data = {
-    //     labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    //     datasets: [
-    //         {
-    //             label: 'Premium Collected',
-    //             data: [12000, 19000, 30000, 50000, 20000, 30000],
-    //             backgroundColor: 'rgba(75, 123, 236, 0.6)',
-    //             borderColor: 'rgba(75, 123, 236, 1)',
-    //             borderWidth: 1,
-    //         },
-    //     ],
-    // };
+        fetchSchedules();
+    }, [lecturerId]);
 
-    // const options = {
-    //     responsive: true,
-    //     maintainAspectRatio: false,
-    //     plugins: {
-    //         legend: {
-    //             position: 'top',
-    //             labels: {
-    //                 font: {
-    //                     size: 12,
-    //                     family: "'Inter', sans-serif"
-    //                 }
-    //             }
-    //         },
-    //         tooltip: {
-    //             backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    //             padding: 12,
-    //             titleFont: {
-    //                 size: 14,
-    //                 family: "'Inter', sans-serif"
-    //             },
-    //             bodyFont: {
-    //                 size: 13,
-    //                 family: "'Inter', sans-serif"
-    //             }
-    //         }
-    //     },
-    //     scales: {
-    //         y: {
-    //             beginAtZero: true,
-    //             grid: {
-    //                 color: 'rgba(0, 0, 0, 0.1)',
-    //                 drawBorder: false
-    //             },
-    //             ticks: {
-    //                 font: {
-    //                     size: 12,
-    //                     family: "'Inter', sans-serif"
-    //                 }
-    //             }
-    //         },
-    //         x: {
-    //             grid: {
-    //                 display: false
-    //             },
-    //             ticks: {
-    //                 font: {
-    //                     size: 12,
-    //                     family: "'Inter', sans-serif"
-    //                 }
-    //             }
-    //         }
-    //     }
-    // };
+    // Fetch accepted schedules when lecturer ID is available
+    useEffect(() => {
+        const fetchAcceptedSchedulesData = async () => {
+            try {
+                if (lecturerId) {
+                    const schedules = await fetchAcceptedSchedules(lecturerId);
+                    setAcceptedSchedulesCount(schedules.length.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching accepted schedules:", error);
+                setAcceptedSchedulesCount("Error");
+            }
+        };
+
+        fetchAcceptedSchedulesData();
+    }, [lecturerId]);
+
+    // Fetch reschedule requests when lecturer ID is available
+    useEffect(() => {
+        const fetchRescheduleRequests = async () => {
+            try {
+                if (lecturerId) {
+                    const requests = await LecRequestService.getLecturerRescheduleRequests(lecturerId);
+                    setReschedulesCount(requests.length.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching reschedule requests:", error);
+                setReschedulesCount("Error");
+            }
+        };
+
+        fetchRescheduleRequests();
+    }, [lecturerId]);
+
+    // Fetch availability forms when lecturer ID is available
+    useEffect(() => {
+        const fetchAvailabilityForms = async () => {
+            try {
+                if (lecturerId) {
+                    const forms = await lecAvailabilityService.getAvailability(lecturerId);
+                    setAvailabilityFormsCount(forms.length.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching availability forms:", error);
+                setAvailabilityFormsCount("Error");
+            }
+        };
+
+        fetchAvailabilityForms();
+    }, [lecturerId]);
 
     const cards = [
-        { title: 'Module wise Schedules', value: 'N/A', icon: <Calendar className="card-icon" size={24} />, color: '#4b7bec', tab: 'schedules-new' },
-        { title: 'Confirmed Schedules', value: 'N/A', icon: <CheckSquare className="card-icon" size={24} />, color: '#26de81', tab: 'schedules-confirmed' },
-        { title: 'Reschedules Requested', value: 'N/A', icon: <FileText className="card-icon" size={24} />, color: '#fd9644', tab: 'reschedules' },
-        { title: 'Sent Availability', value: 'N/A', icon: <Send className="card-icon" size={24} />, color: '#a55eea', tab: 'availability-sent' }
+        { title: 'Module wise Schedules', value: newSchedulesCount, icon: <Calendar className="card-icon" size={24} />, color: '#4b7bec', tab: 'schedules-new' },
+        { title: 'Accepted Schedules', value: acceptedSchedulesCount, icon: <CheckSquare className="card-icon" size={24} />, color: '#26de81', tab: 'schedules-accepted' },
+        { title: 'Reschedules Requested', value: reschedulesCount, icon: <FileText className="card-icon" size={24} />, color: '#fd9644', tab: 'reschedules' },
+        { title: 'Sent Availability', value: availabilityFormsCount, icon: <Send className="card-icon" size={24} />, color: '#a55eea', tab: 'availability-sent' }
     ];
 
     const handleNavChange = (tab) => {
@@ -160,6 +187,7 @@ const LecDashboard = ({ onLogout }) => {
 
     return (
         <div className="dashboard-container">
+            {error && <div className="error-message">{error}</div>}
             <Sidebar onLogout={onLogout} onNavChange={handleNavChange} activeTab={activeTab} />
             <div className="dashboard-content">
                 <Navbar onLogout={onLogout} />
