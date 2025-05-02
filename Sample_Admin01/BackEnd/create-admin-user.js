@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const adminUser = {
     name: "Admin",
     email: "admin@example.com",
-    password: "",
+    password: "", // Will be hashed before insertion
     phone: "1234567890",
     role: "admin"
 };
