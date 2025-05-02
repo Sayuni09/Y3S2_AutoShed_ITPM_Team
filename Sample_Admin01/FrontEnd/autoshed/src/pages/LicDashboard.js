@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import Navbar from "../components/LIC_Component/Navbar";
 import Sidebar from "../components/LIC_Component/Sidebar";
@@ -19,19 +19,134 @@ import LicSchedulesReport from "../components/LIC_Component/LicSchedulesReport";
 import LicLectureAvalabilityReport from "../components/LIC_Component/LicLectureAvalabilityReport";
 import LicExaminerAvalabilityReport from "../components/LIC_Component/LicExaminerAvalabilityReport";
 
-
+// Import services
+import lecDetailsService from "../services/LIC_Services/LecDetailsService";
+import exDetailsService from "../services/LIC_Services/ExDetailsService";
+import LicRequestService from "../services/LIC_Services/LicRequestService";
+import LicViewScheduleService from "../services/LIC_Services/LicViewScheduleService";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const LicDashboard = ({ onLogout }) => {
     const [activeTab, setActiveTab] = useState("dashboard");
     const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
+    
+    // State variables for counts
+    const [lecturersCount, setLecturersCount] = useState("N/A");
+    const [examinersCount, setExaminersCount] = useState("N/A");
+    const [rescheduleRequestsCount, setRescheduleRequestsCount] = useState("N/A");
+    const [schedulesCount, setSchedulesCount] = useState("N/A");
+    
+    // State variable for LIC ID
+    const [licId, setLicId] = useState(null);
+    const [error, setError] = useState(null);
+
+    // Get LIC ID from JWT token
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            try {
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                setLicId(decodedToken.id);
+            } catch (err) {
+                console.error("Error decoding token:", err);
+                setError("Failed to authenticate. Please login again.");
+            }
+        } else {
+            setError("Not authenticated. Please login.");
+        }
+    }, []);
+
+    // Fetch lecturers count
+    useEffect(() => {
+        const fetchLecturersCount = async () => {
+            try {
+                if (licId) {
+                    const lecturers = await lecDetailsService.getLecturerDetails(licId);
+                    // Calculate total unique lecturers
+                    const uniqueLecturers = new Set();
+                    lecturers.forEach(module => {
+                        module.lecturers.forEach(lecturer => {
+                            uniqueLecturers.add(lecturer.lec_id);
+                        });
+                    });
+                    setLecturersCount(uniqueLecturers.size.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching lecturers count:", error);
+                setLecturersCount("Error");
+            }
+        };
+
+        fetchLecturersCount();
+    }, [licId]);
+
+    // Fetch examiners count
+    useEffect(() => {
+        const fetchExaminersCount = async () => {
+            try {
+                if (licId) {
+                    const examiners = await exDetailsService.getExaminerDetails(licId);
+                    // Calculate total unique examiners
+                    const uniqueExaminers = new Set();
+                    examiners.forEach(module => {
+                        module.examiners.forEach(examiner => {
+                            uniqueExaminers.add(examiner.examiner_id);
+                        });
+                    });
+                    setExaminersCount(uniqueExaminers.size.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching examiners count:", error);
+                setExaminersCount("Error");
+            }
+        };
+
+        fetchExaminersCount();
+    }, [licId]);
+
+    // Fetch reschedule requests count
+    useEffect(() => {
+        const fetchRescheduleRequestsCount = async () => {
+            try {
+                if (licId) {
+                    const response = await LicRequestService.getAllRescheduleRequests(licId);
+                    const totalRequests = 
+                        (response.data.lecturerRequests ? response.data.lecturerRequests.length : 0) +
+                        (response.data.examinerRequests ? response.data.examinerRequests.length : 0);
+                    setRescheduleRequestsCount(totalRequests.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching reschedule requests count:", error);
+                setRescheduleRequestsCount("Error");
+            }
+        };
+
+        fetchRescheduleRequestsCount();
+    }, [licId]);
+
+    // Fetch schedules count
+    useEffect(() => {
+        const fetchSchedulesCount = async () => {
+            try {
+                if (licId) {
+                    const schedules = await LicViewScheduleService.getSchedulesByLic(licId);
+                    setSchedulesCount(schedules.length.toString());
+                }
+            } catch (error) {
+                console.error("Error fetching schedules count:", error);
+                setSchedulesCount("Error");
+            }
+        };
+
+        fetchSchedulesCount();
+    }, [licId]);
 
     const cards = [
-        { title: 'Lecturers', value: 'N/A', icon: <Users className="card-icon" size={24} />, color: '#4b7bec', tab: 'lecturers' },
-        { title: 'Examiners', value: 'N/A', icon: <Users className="card-icon" size={24} />, color: '#26de81', tab: 'examiners' },
-        { title: 'Requested Reschedules', value: 'N/A', icon: <FileText className="card-icon" size={24} />, color: '#fd9644', tab: 'requested-reschedules' },
-        { title: 'Scheduled Presentations', value: 'N/A', icon: <CheckSquare className="card-icon" size={24} />, color: '#a55eea', tab: 'schedules-view' }
+        { title: 'Lecturers', value: lecturersCount, icon: <Users className="card-icon" size={24} />, color: '#4b7bec', tab: 'lecturers' },
+        { title: 'Examiners', value: examinersCount, icon: <Users className="card-icon" size={24} />, color: '#26de81', tab: 'examiners' },
+        { title: 'Requested Reschedules', value: rescheduleRequestsCount, icon: <FileText className="card-icon" size={24} />, color: '#fd9644', tab: 'requested-reschedules' },
+        { title: 'Scheduled Presentations', value: schedulesCount, icon: <CheckSquare className="card-icon" size={24} />, color: '#a55eea', tab: 'schedules-view' }
     ];
 
     // Define the report cards
@@ -137,6 +252,7 @@ const LicDashboard = ({ onLogout }) => {
 
     return (
         <div className="dashboard-container">
+            {error && <div className="error-message">{error}</div>}
             <Sidebar onLogout={onLogout} onNavChange={setActiveTab} activeTab={activeTab} />
             <div className="dashboard-content">
                 <Navbar onLogout={onLogout} />
