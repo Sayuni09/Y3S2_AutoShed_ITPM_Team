@@ -14,7 +14,7 @@ import FreeTimeSlotForm from "../components/ADMIN_Component/FreeTimeSlotForm";
 import { getFreeTimeSlots, addFreeTimeSlot, updateFreeTimeSlot, deleteFreeTimeSlot } from "../services/ADMIN_Service/freeTimeSlotService";
 import "../styles/AD_Styles/AdminDashboard.css";
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Card, CardContent, Typography, Grid, Box, Paper, IconButton, Tooltip as MuiTooltip } from '@mui/material';
 import { People, Schedule, School, Assignment, Download, Add} from '@mui/icons-material';
@@ -22,8 +22,20 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
-
+function safeJoinModules(modules) {
+    if (!modules) return 'N/A';
+    if (Array.isArray(modules)) return modules.join(', ');
+    if (typeof modules === 'string') {
+        try {
+            const arr = JSON.parse(modules);
+            if (Array.isArray(arr)) return arr.join(', ');
+            return modules;
+        } catch {
+            return modules;
+        }
+    }
+    return 'N/A';
+}
 
 const AdminDashboard = ({ onLogout }) => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -145,134 +157,145 @@ const AdminDashboard = ({ onLogout }) => {
         try {
             const doc = new jsPDF();
             const date = new Date().toLocaleDateString();
-            
+            let yPos = 20;
+
             // Title and Header
             doc.setFillColor(41, 128, 185);
-            doc.rect(0, 0, doc.internal.pageSize.width, 40, 'F');
-            
+            doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F');
             doc.setTextColor(255);
-            doc.setFontSize(24);
+            doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('All Users Report', 14, 25);
-            
-            doc.setFontSize(12);
+            doc.text('All Users Report', 14, 20);
+            doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Generated on: ${date}`, 14, 35);
+            doc.text(`Generated on: ${date}`, 14, 27);
+            yPos = 40;
 
-            let yPos = 50;
+            // Summary Statistics
+            doc.setFontSize(12);
+            doc.setTextColor(0);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Summary Statistics:', 14, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 7;
+            autoTable(doc, {
+                startY: yPos,
+                head: [['Admins', 'Lecturers', 'LICs', 'Examiners']],
+                body: [[
+                    admins.length,
+                    lecturers.length,
+                    lics.length,
+                    examiners.length
+                ]],
+                theme: 'plain',
+                styles: { fontSize: 11, halign: 'center' },
+                headStyles: { fillColor: [230, 230, 250], textColor: 0, fontStyle: 'bold' },
+                margin: { left: 14, right: 14 }
+            });
+            yPos = doc.lastAutoTable.finalY + 10;
 
             // Admins Section
-            doc.setTextColor(0);
-            doc.setFontSize(16);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Administrators', 14, yPos);
-            
-            doc.autoTable({
-                head: [['ID', 'Name', 'Email', 'Phone', 'Role', 'Created At']],
-                body: admins.map(admin => [
-                    admin.id,
-                    admin.name,
-                    admin.email,
-                    admin.phone || 'N/A',
-                    admin.role,
-                    new Date(admin.created_at).toLocaleDateString()
-                ]),
-                startY: yPos + 10,
-                theme: 'grid',
-                styles: { fontSize: 10 },
-                headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 254] }
-            });
-
-            yPos = doc.lastAutoTable.finalY + 20;
+            if (admins && admins.length > 0) {
+                doc.setTextColor(0);
+                doc.setFontSize(15);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Administrators', 14, yPos);
+                yPos += 6;
+                autoTable(doc, {
+                    head: [['ID', 'Name', 'Email', 'Phone', 'Role', 'Created At']],
+                    body: admins.map(a => [
+                        a && a.id ? String(a.id) : 'N/A',
+                        a && a.name ? String(a.name) : 'N/A',
+                        a && a.email ? String(a.email) : 'N/A',
+                        a && a.phone ? String(a.phone) : 'N/A',
+                        a && a.role ? String(a.role) : 'N/A',
+                        a && a.created_at ? new Date(a.created_at).toLocaleDateString() : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 254] }
+                });
+                yPos = doc.lastAutoTable.finalY + 10;
+            }
 
             // Lecturers Section
-            doc.setTextColor(0);
-            doc.setFontSize(16);
-            doc.text('Lecturers', 14, yPos);
-
-            doc.autoTable({
-                head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
-                body: lecturers.map(lecturer => [
-                    lecturer.lec_id,
-                    lecturer.lec_name,
-                    lecturer.lec_email,
-                    lecturer.phone_number || 'N/A',
-                    lecturer.lecture_modules ? (typeof lecturer.lecture_modules === 'string' ? 
-                        JSON.parse(lecturer.lecture_modules).join(", ") : 
-                        lecturer.lecture_modules.join(", ")) : 'N/A',
-                    new Date(lecturer.created_at).toLocaleDateString()
-                ]),
-                startY: yPos + 10,
-                theme: 'grid',
-                styles: { fontSize: 10 },
-                headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 254] }
-            });
-
-            yPos = doc.lastAutoTable.finalY + 20;
-
-            // Add new page if needed
-            if (yPos > doc.internal.pageSize.height - 100) {
-                doc.addPage();
-                yPos = 20;
+            if (lecturers && lecturers.length > 0) {
+                doc.setTextColor(0);
+                doc.setFontSize(15);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Lecturers', 14, yPos);
+                yPos += 6;
+                autoTable(doc, {
+                    head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
+                    body: lecturers.map(l => [
+                        l && l.lec_id ? String(l.lec_id) : 'N/A',
+                        l && l.lec_name ? String(l.lec_name) : 'N/A',
+                        l && l.lec_email ? String(l.lec_email) : 'N/A',
+                        l && l.phone_number ? String(l.phone_number) : 'N/A',
+                        safeJoinModules(l.lecture_modules),
+                        l && l.created_at ? new Date(l.created_at).toLocaleDateString() : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 254] }
+                });
+                yPos = doc.lastAutoTable.finalY + 10;
             }
 
             // LICs Section
-            doc.setTextColor(0);
-            doc.setFontSize(16);
-            doc.text('Lecturers in Charge', 14, yPos);
-
-            doc.autoTable({
-                head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
-                body: lics.map(lic => [
-                    lic.lec_id,
-                    lic.lec_name,
-                    lic.lec_email,
-                    lic.phone_number || 'N/A',
-                    lic.lic_modules ? (typeof lic.lic_modules === 'string' ? 
-                        JSON.parse(lic.lic_modules).join(", ") : 
-                        lic.lic_modules.join(", ")) : 'N/A',
-                    new Date(lic.created_at).toLocaleDateString()
-                ]),
-                startY: yPos + 10,
-                theme: 'grid',
-                styles: { fontSize: 10 },
-                headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 254] }
-            });
-
-            yPos = doc.lastAutoTable.finalY + 20;
-
-            // Add new page if needed
-            if (yPos > doc.internal.pageSize.height - 100) {
-                doc.addPage();
-                yPos = 20;
+            if (lics && lics.length > 0) {
+                doc.setTextColor(0);
+                doc.setFontSize(15);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Lecturers in Charge', 14, yPos);
+                yPos += 6;
+                autoTable(doc, {
+                    head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
+                    body: lics.map(l => [
+                        l && l.lec_id ? String(l.lec_id) : 'N/A',
+                        l && l.lec_name ? String(l.lec_name) : 'N/A',
+                        l && l.lec_email ? String(l.lec_email) : 'N/A',
+                        l && l.phone_number ? String(l.phone_number) : 'N/A',
+                        safeJoinModules(l.lic_modules),
+                        l && l.created_at ? new Date(l.created_at).toLocaleDateString() : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 254] }
+                });
+                yPos = doc.lastAutoTable.finalY + 10;
             }
 
             // Examiners Section
-            doc.setTextColor(0);
-            doc.setFontSize(16);
-            doc.text('Examiners', 14, yPos);
-
-            doc.autoTable({
-                head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
-                body: examiners.map(examiner => [
-                    examiner.examiner_id,
-                    examiner.examiner_name,
-                    examiner.examiner_email,
-                    examiner.phone_number || 'N/A',
-                    examiner.module_codes ? (typeof examiner.module_codes === 'string' ? 
-                        JSON.parse(examiner.module_codes).join(", ") : 
-                        examiner.module_codes.join(", ")) : 'N/A',
-                    new Date(examiner.created_at).toLocaleDateString()
-                ]),
-                startY: yPos + 10,
-                theme: 'grid',
-                styles: { fontSize: 10 },
-                headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 254] }
-            });
+            if (examiners && examiners.length > 0) {
+                doc.setTextColor(0);
+                doc.setFontSize(15);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Examiners', 14, yPos);
+                yPos += 6;
+                autoTable(doc, {
+                    head: [['ID', 'Name', 'Email', 'Phone', 'Modules', 'Created At']],
+                    body: examiners.map(e => [
+                        e && e.examiner_id ? String(e.examiner_id) : 'N/A',
+                        e && e.examiner_name ? String(e.examiner_name) : 'N/A',
+                        e && e.examiner_email ? String(e.examiner_email) : 'N/A',
+                        e && e.phone_number ? String(e.phone_number) : 'N/A',
+                        safeJoinModules(e.module_codes),
+                        e && e.created_at ? new Date(e.created_at).toLocaleDateString() : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 254] }
+                });
+            }
 
             // Add page numbers
             const pageCount = doc.internal.getNumberOfPages();
@@ -286,6 +309,7 @@ const AdminDashboard = ({ onLogout }) => {
             doc.save(`all-users-report-${date}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
         }
     };
 
@@ -293,78 +317,66 @@ const AdminDashboard = ({ onLogout }) => {
         try {
             const doc = new jsPDF();
             const date = new Date().toLocaleDateString();
-            
-            // Header
+            let yPos = 20;
             doc.setFillColor(46, 125, 50);
-            doc.rect(0, 0, doc.internal.pageSize.width, 40, 'F');
-            
+            doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F');
             doc.setTextColor(255);
-            doc.setFontSize(24);
+            doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Time Slots Report', 14, 25);
-            
-            doc.setFontSize(12);
+            doc.text('Time Slots Report', 14, 20);
+            doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Generated on: ${date}`, 14, 35);
+            doc.text(`Generated on: ${date}`, 14, 27);
+            yPos = 40;
 
-            // Summary statistics
+            // Summary Statistics
             const availableCount = freeTimeSlots.filter(s => s.status === 'available').length;
             const bookedCount = freeTimeSlots.filter(s => s.status === 'booked').length;
-            
-            doc.setFillColor(245, 245, 245);
-            doc.roundedRect(14, 50, 180, 30, 3, 3, 'F');
-            
-            doc.setTextColor(0);
             doc.setFontSize(12);
-            doc.text('Summary:', 20, 60);
-            
-            doc.setTextColor(46, 125, 50);
-            doc.setFontSize(11);
-            doc.text(`Total Time Slots: ${freeTimeSlots.length}`, 20, 70);
-            
-            doc.setTextColor(46, 125, 50);
-            doc.text(`Available: ${availableCount}`, 90, 70);
-            
-            doc.setTextColor(211, 47, 47);
-            doc.text(`Booked: ${bookedCount}`, 150, 70);
-
-            // Time Slots Table
-            doc.autoTable({
-                head: [['Module Code', 'Module Name', 'Date', 'Time', 'Venue', 'Academic Year', 'Semester', 'Status']],
-                body: freeTimeSlots.map(slot => [
-                    slot.module_code,
-                    slot.module_name || '',
-                    new Date(slot.date).toLocaleDateString(),
-                    `${slot.start_time?.substring(0, 5)} - ${slot.end_time?.substring(0, 5)}`,
-                    slot.venue_name,
-                    slot.academic_year,
-                    slot.semester,
-                    slot.status
-                ]),
-                startY: 90,
-                theme: 'grid',
-                styles: { fontSize: 9, cellPadding: 5 },
-                headStyles: { fillColor: [46, 125, 50], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 245] },
-                columnStyles: {
-                    7: {
-                        cellCallback: function(cell, data) {
-                            if (data.section === 'body') {
-                                const status = cell.raw;
-                                if (status === 'available') {
-                                    cell.styles.textColor = [46, 125, 50];
-                                    cell.styles.fontStyle = 'bold';
-                                } else {
-                                    cell.styles.textColor = [211, 47, 47];
-                                    cell.styles.fontStyle = 'bold';
-                                }
-                            }
-                        }
-                    }
-                }
+            doc.setTextColor(0);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Summary Statistics:', 14, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 7;
+            autoTable(doc, {
+                startY: yPos,
+                head: [['Total Time Slots', 'Available', 'Booked']],
+                body: [[freeTimeSlots.length, availableCount, bookedCount]],
+                theme: 'plain',
+                styles: { fontSize: 11, halign: 'center' },
+                headStyles: { fillColor: [230, 250, 230], textColor: 0, fontStyle: 'bold' },
+                margin: { left: 14, right: 14 }
             });
+            yPos = doc.lastAutoTable.finalY + 10;
 
-            // Add page numbers
+            // Filters (if any)
+            if (typeof statusFilter !== 'undefined' && statusFilter !== 'all') {
+                doc.setFontSize(11);
+                doc.setTextColor(80, 80, 80);
+                doc.text(`Filter: Status = ${statusFilter}`, 14, yPos);
+                yPos += 7;
+            }
+
+            if (freeTimeSlots && freeTimeSlots.length > 0) {
+                autoTable(doc, {
+                    head: [['Module Code', 'Module Name', 'Date', 'Time', 'Venue', 'Academic Year', 'Semester', 'Status']],
+                    body: freeTimeSlots.map(slot => [
+                        slot && slot.module_code ? String(slot.module_code) : 'N/A',
+                        slot && slot.module_name ? String(slot.module_name) : 'N/A',
+                        slot && slot.date ? new Date(slot.date).toLocaleDateString() : 'N/A',
+                        slot && slot.start_time && slot.end_time ? `${slot.start_time.substring(0, 5)} - ${slot.end_time.substring(0, 5)}` : 'N/A',
+                        slot && slot.venue_name ? String(slot.venue_name) : 'N/A',
+                        slot && slot.academic_year ? String(slot.academic_year) : 'N/A',
+                        slot && slot.semester ? String(slot.semester) : 'N/A',
+                        slot && slot.status ? String(slot.status) : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [46, 125, 50], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 245] }
+                });
+            }
             const pageCount = doc.internal.getNumberOfPages();
             for (let i = 1; i <= pageCount; i++) {
                 doc.setPage(i);
@@ -372,10 +384,10 @@ const AdminDashboard = ({ onLogout }) => {
                 doc.setTextColor(150);
                 doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
             }
-
             doc.save(`timeslots-report-${date}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
         }
     };
 
@@ -383,51 +395,56 @@ const AdminDashboard = ({ onLogout }) => {
         try {
             const doc = new jsPDF();
             const date = new Date().toLocaleDateString();
-            
-            // Filter to include only available time slots
-            const availableSlots = freeTimeSlots.filter(slot => slot.status === 'available');
-            
-            // Header
+            let yPos = 20;
             doc.setFillColor(46, 125, 50);
-            doc.rect(0, 0, doc.internal.pageSize.width, 40, 'F');
-            
+            doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F');
             doc.setTextColor(255);
-            doc.setFontSize(24);
+            doc.setFontSize(20);
             doc.setFont('helvetica', 'bold');
-            doc.text('Available Time Slots Report', 14, 25);
-            
-            doc.setFontSize(12);
+            doc.text('Available Time Slots Report', 14, 20);
+            doc.setFontSize(11);
             doc.setFont('helvetica', 'normal');
-            doc.text(`Generated on: ${date}`, 14, 35);
+            doc.text(`Generated on: ${date}`, 14, 27);
+            yPos = 40;
+            const availableSlots = freeTimeSlots.filter(slot => slot.status === 'available');
 
-            // Summary
-            doc.setFillColor(245, 245, 245);
-            doc.roundedRect(14, 50, 180, 25, 3, 3, 'F');
-            
-            doc.setTextColor(46, 125, 50);
+            // Summary Statistics
             doc.setFontSize(12);
-            doc.text(`Total Available Slots: ${availableSlots.length}`, 20, 65);
-
-            // Available Time Slots Table
-            doc.autoTable({
-                head: [['Module Code', 'Module Name', 'Date', 'Time', 'Venue', 'Academic Year', 'Semester']],
-                body: availableSlots.map(slot => [
-                    slot.module_code,
-                    slot.module_name || '',
-                    new Date(slot.date).toLocaleDateString(),
-                    `${slot.start_time?.substring(0, 5)} - ${slot.end_time?.substring(0, 5)}`,
-                    slot.venue_name,
-                    slot.academic_year,
-                    slot.semester
-                ]),
-                startY: 85,
-                theme: 'grid',
-                styles: { fontSize: 9, cellPadding: 5 },
-                headStyles: { fillColor: [46, 125, 50], textColor: 255, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [245, 250, 245] }
+            doc.setTextColor(0);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Summary Statistics:', 14, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 7;
+            autoTable(doc, {
+                startY: yPos,
+                head: [['Total Available Slots']],
+                body: [[availableSlots.length]],
+                theme: 'plain',
+                styles: { fontSize: 11, halign: 'center' },
+                headStyles: { fillColor: [230, 250, 230], textColor: 0, fontStyle: 'bold' },
+                margin: { left: 14, right: 14 }
             });
+            yPos = doc.lastAutoTable.finalY + 10;
 
-            // Add page numbers
+            if (freeTimeSlots && freeTimeSlots.length > 0) {
+                autoTable(doc, {
+                    head: [['Module Code', 'Module Name', 'Date', 'Time', 'Venue', 'Academic Year', 'Semester']],
+                    body: availableSlots.map(slot => [
+                        slot && slot.module_code ? String(slot.module_code) : 'N/A',
+                        slot && slot.module_name ? String(slot.module_name) : 'N/A',
+                        slot && slot.date ? new Date(slot.date).toLocaleDateString() : 'N/A',
+                        slot && slot.start_time && slot.end_time ? `${slot.start_time.substring(0, 5)} - ${slot.end_time.substring(0, 5)}` : 'N/A',
+                        slot && slot.venue_name ? String(slot.venue_name) : 'N/A',
+                        slot && slot.academic_year ? String(slot.academic_year) : 'N/A',
+                        slot && slot.semester ? String(slot.semester) : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [46, 125, 50], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 245] }
+                });
+            }
             const pageCount = doc.internal.getNumberOfPages();
             for (let i = 1; i <= pageCount; i++) {
                 doc.setPage(i);
@@ -435,10 +452,10 @@ const AdminDashboard = ({ onLogout }) => {
                 doc.setTextColor(150);
                 doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
             }
-
             doc.save(`available-timeslots-report-${date}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
         }
     };
 
@@ -446,34 +463,65 @@ const AdminDashboard = ({ onLogout }) => {
         try {
             const doc = new jsPDF();
             const date = new Date().toLocaleDateString();
-            
-            // Title
-            doc.setFontSize(18);
-            doc.text('Admins Report', 14, 22);
+            let yPos = 20;
+            doc.setFillColor(41, 128, 185);
+            doc.rect(0, 0, doc.internal.pageSize.width, 30, 'F');
+            doc.setTextColor(255);
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Admins Report', 14, 20);
             doc.setFontSize(11);
-            doc.setTextColor(100);
-            doc.text(`Generated on: ${date}`, 14, 28);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Generated on: ${date}`, 14, 27);
+            yPos = 40;
 
-            // Create the table
-            doc.autoTable({
-                head: [['ID', 'Name', 'Email', 'Phone', 'Role', 'Created At']],
-                body: admins.map(admin => [
-                    admin.id,
-                    admin.name,
-                    admin.email,
-                    admin.phone || 'N/A',
-                    admin.role,
-                    new Date(admin.created_at).toLocaleDateString()
-                ]),
-                startY: 35,
-                theme: 'grid',
-                styles: { fontSize: 9 },
-                headStyles: { fillColor: [41, 128, 185], textColor: 255 }
+            // Summary Statistics
+            doc.setFontSize(12);
+            doc.setTextColor(0);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Summary Statistics:', 14, yPos);
+            doc.setFont('helvetica', 'normal');
+            yPos += 7;
+            autoTable(doc, {
+                startY: yPos,
+                head: [['Total Admins']],
+                body: [[admins.length]],
+                theme: 'plain',
+                styles: { fontSize: 11, halign: 'center' },
+                headStyles: { fillColor: [230, 230, 250], textColor: 0, fontStyle: 'bold' },
+                margin: { left: 14, right: 14 }
             });
+            yPos = doc.lastAutoTable.finalY + 10;
 
+            if (admins && admins.length > 0) {
+                autoTable(doc, {
+                    head: [['ID', 'Name', 'Email', 'Phone', 'Role', 'Created At']],
+                    body: admins.map(a => [
+                        a && a.id ? String(a.id) : 'N/A',
+                        a && a.name ? String(a.name) : 'N/A',
+                        a && a.email ? String(a.email) : 'N/A',
+                        a && a.phone ? String(a.phone) : 'N/A',
+                        a && a.role ? String(a.role) : 'N/A',
+                        a && a.created_at ? new Date(a.created_at).toLocaleDateString() : 'N/A'
+                    ]),
+                    startY: yPos,
+                    theme: 'grid',
+                    styles: { fontSize: 10 },
+                    headStyles: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' },
+                    alternateRowStyles: { fillColor: [245, 250, 254] }
+                });
+            }
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(150);
+                doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 10);
+            }
             doc.save(`admins-report-${date}.pdf`);
         } catch (error) {
             console.error('Error generating PDF:', error);
+            alert('Error generating PDF. Please try again.');
         }
     };
 
@@ -1218,7 +1266,7 @@ const AdminDashboard = ({ onLogout }) => {
                                                     <TableCell>{lecturer.lec_name}</TableCell>
                                                     <TableCell>{lecturer.lec_email}</TableCell>
                                                     <TableCell>{lecturer.phone_number || "N/A"}</TableCell>
-                                                    <TableCell>{lecturer.lecture_modules ? (typeof lecturer.lecture_modules === 'string' ? JSON.parse(lecturer.lecture_modules).join(", ") : lecturer.lecture_modules.join(", ")) : "N/A"}</TableCell>
+                                                    <TableCell>{safeJoinModules(lecturer.lecture_modules)}</TableCell>
                                                     <TableCell>{new Date(lecturer.created_at).toLocaleString()}</TableCell>
                                                     <TableCell align="center">
                                                         <MuiTooltip title="Edit" arrow>
@@ -1280,7 +1328,7 @@ const AdminDashboard = ({ onLogout }) => {
                                                     <TableCell>{lic.lec_name}</TableCell>
                                                     <TableCell>{lic.lec_email}</TableCell>
                                                     <TableCell>{lic.phone_number || "N/A"}</TableCell>
-                                                    <TableCell>{lic.lic_modules ? (typeof lic.lic_modules === 'string' ? JSON.parse(lic.lic_modules).join(", ") : lic.lic_modules.join(", ")) : "N/A"}</TableCell>
+                                                    <TableCell>{safeJoinModules(lic.lic_modules)}</TableCell>
                                                     <TableCell>{new Date(lic.created_at).toLocaleString()}</TableCell>
                                                     <TableCell align="center">
                                                         <MuiTooltip title="Edit" arrow>
@@ -1342,7 +1390,7 @@ const AdminDashboard = ({ onLogout }) => {
                                                 <TableCell>{examiner.examiner_name}</TableCell>
                                                 <TableCell>{examiner.examiner_email}</TableCell>
                                                 <TableCell>{examiner.phone_number || "N/A"}</TableCell>
-                                                <TableCell>{examiner.module_codes ? (typeof examiner.module_codes === 'string' ? JSON.parse(examiner.module_codes).join(", ") : examiner.module_codes.join(", ")) : "N/A"}</TableCell>
+                                                <TableCell>{safeJoinModules(examiner.module_codes)}</TableCell>
                                                 <TableCell>{new Date(examiner.created_at).toLocaleString()}</TableCell>
                                                 <TableCell align="center">
                                                     <MuiTooltip title="Edit" arrow>
@@ -1506,11 +1554,7 @@ const AdminDashboard = ({ onLogout }) => {
                     </div>
                 );
 
-                    
-                    
-
-
-
+    
             default:
                 return <div>Select a tab</div>;
         }
@@ -1531,3 +1575,5 @@ const AdminDashboard = ({ onLogout }) => {
 };
 
 export default AdminDashboard;
+
+

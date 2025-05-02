@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getModules } from "../../services/ADMIN_Service/freeTimeSlotService";
+import { getModules, getLICs } from "../../services/ADMIN_Service/freeTimeSlotService";
 import "../../styles/AD_Styles/Forms.css";
 
 const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
@@ -13,24 +13,37 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
     start_time: "",
     end_time: "",
     venue_name: "",
+    allocated_to: "",
     status: "available"
   });
   
   const [modules, setModules] = useState([]);
+  const [lics, setLICs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchModules = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const moduleData = await getModules();
-        setModules(moduleData);
-      } catch (err) {
-        console.error("Module fetch error:", err);
-        setError("Failed to load modules. Please try again.");
+        setError("");
         
-        // Fallback data so the form still works
+        console.log("Fetching form data...");
+        const [moduleData, licData] = await Promise.all([
+          getModules(),
+          getLICs()
+        ]);
+        
+        console.log("Modules fetched:", moduleData);
+        console.log("LICs fetched:", licData);
+        
+        setModules(moduleData);
+        setLICs(licData);
+      } catch (err) {
+        console.error("Data fetch error:", err);
+        setError(err.message || "Failed to load data. Please try again.");
+        
+        // Only set fallback data for modules, not for LICs
         setModules([
           { module_code: "IT1040", module_name: "Database Systems" },
           { module_code: "IT4010", module_name: "Software Engineering" },
@@ -43,7 +56,7 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
       }
     };
     
-    fetchModules();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -71,6 +84,7 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
         start_time: formatTime(slotData.start_time),
         end_time: formatTime(slotData.end_time),
         venue_name: slotData.venue_name || "",
+        allocated_to: slotData.allocated_to || "",
         status: slotData.status || "available"
       });
     }
@@ -141,7 +155,6 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
           </div>
         </div>
         
-        {/* Add more form fields here */}
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="semester">Semester*</label>
@@ -210,16 +223,37 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
           </div>
           
           <div className="form-group">
-            <label htmlFor="status">Status</label>
+            <label htmlFor="allocated_to">Allocate to LIC</label>
             <select
-              id="status"
-              name="status"
-              value={formData.status}
+              id="allocated_to"
+              name="allocated_to"
+              value={formData.allocated_to}
               onChange={handleChange}
+              className={lics.length === 0 ? 'no-lics' : ''}
             >
-              <option value="available">Available</option>
-              <option value="booked">Booked</option>
+              <option value="">Select LIC</option>
+              {lics && lics.length > 0 ? (
+                lics.map(lic => {
+                  // Parse lic_modules if it's a string
+                  const modules = typeof lic.lic_modules === 'string' 
+                    ? JSON.parse(lic.lic_modules) 
+                    : lic.lic_modules;
+                  
+                  return (
+                    <option key={lic.lec_id} value={lic.lec_id}>
+                      {`${lic.lec_name} (${lic.lec_id}) - ${modules ? modules.join(', ') : 'No modules'}`}
+                    </option>
+                  );
+                })
+              ) : (
+                <option value="" disabled>No LICs available</option>
+              )}
             </select>
+            {lics && lics.length === 0 && (
+              <div className="help-text" style={{ color: '#dc3545', fontSize: '0.875em', marginTop: '0.25rem' }}>
+                No LICs found in the system. Please add LICs first.
+              </div>
+            )}
           </div>
         </div>
         
@@ -249,6 +283,21 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
           </div>
         </div>
         
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="status">Status</label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="available">Available</option>
+              <option value="booked">Booked</option>
+            </select>
+          </div>
+        </div>
+        
         <div className="form-buttons">
           <button type="submit" className="submit-button">
             {isEditing ? "Update Time Slot" : "Add Time Slot"}
@@ -263,3 +312,4 @@ const FreeTimeSlotForm = ({ onSubmit, slotData, isEditing, onCancel }) => {
 };
 
 export default FreeTimeSlotForm;
+

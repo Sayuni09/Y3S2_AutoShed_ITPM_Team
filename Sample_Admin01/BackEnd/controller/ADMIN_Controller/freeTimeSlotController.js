@@ -15,6 +15,36 @@ exports.getFreeTimeSlots = (req, res) => {
     });
 };
 
+// Get all LICs
+exports.getLICs = (req, res) => {
+    console.log("Fetching LICs...");
+    const query = `
+        SELECT 
+            lec_id,
+            lec_name,
+            lec_email,
+            phone_number
+        FROM lic 
+        ORDER BY lec_name
+    `;
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Database error when fetching LICs:", err);
+            return res.status(500).json({ message: "Database error occurred", error: err.message });
+        }
+        
+        console.log("LICs fetched:", results);
+        
+        if (!results || results.length === 0) {
+            console.log("No LICs found in database");
+            return res.status(404).json({ message: "No LICs found" });
+        }
+        
+        res.json(results);
+    });
+};
+
 // Add a new free time slot
 exports.addFreeTimeSlot = (req, res) => {
     const { 
