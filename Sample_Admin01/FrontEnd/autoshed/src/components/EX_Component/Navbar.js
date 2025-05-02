@@ -4,23 +4,23 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/EX_Styles/Navbar.css';
 import { IconButton, Tooltip, Menu, MenuItem, Avatar } from '@mui/material';
 import { 
-    Search,
-    Mail,
-    Bell,
+    // Search,
+    // Mail,
+    // Bell,
     // Settings,
     LogOut,
     // User,
     Menu as MenuIcon
 } from 'lucide-react';
-import ExNotification from './ExNotification';
-import ExEmail from './ExEmail';
+// import ExNotification from './ExNotification';
+// import ExEmail from './ExEmail';
 
 const Navbar = ({ onLogout }) => {
     
     const [anchorEl, setAnchorEl] = useState(null);
     const [user, setUser] = useState({ name: '', email: '' });
-    const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [isEmailOpen, setIsEmailOpen] = useState(false);
+    // const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+    // const [isEmailOpen, setIsEmailOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
@@ -46,15 +46,15 @@ const Navbar = ({ onLogout }) => {
 
   
 
-    const toggleNotifications = () => {
-        setIsNotificationOpen(!isNotificationOpen);
-        setIsEmailOpen(false);
-    };
+    // const toggleNotifications = () => {
+    //     setIsNotificationOpen(!isNotificationOpen);
+    //     setIsEmailOpen(false);
+    // };
 
-    const toggleEmails = () => {
-        setIsEmailOpen(!isEmailOpen);
-        setIsNotificationOpen(false);
-    };
+    // const toggleEmails = () => {
+    //     setIsEmailOpen(!isEmailOpen);
+    //     setIsNotificationOpen(false);
+    // };
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -72,7 +72,7 @@ const Navbar = ({ onLogout }) => {
                 <h2>Examiner Dashboard</h2>
             </div>
             <div className={`navbar-end ${isMobileMenuOpen ? 'mobile-menu-open' : ''}`}>
-                <div className="search-box">
+                {/* <div className="search-box">
                     <Search size={20} className="search-icon" />
                     <input type="text" placeholder="Search..." className="search-input" />
                 </div>
@@ -104,7 +104,7 @@ const Navbar = ({ onLogout }) => {
                         onClose={() => setIsEmailOpen(false)}
                         userEmail={user.email}
                     />
-                </div>
+                </div> */}
                 <div className="profile-section">
                     {/* <div className="profile-info">
                         <div className="profile-name">{user.name || 'Examiner'}</div>
