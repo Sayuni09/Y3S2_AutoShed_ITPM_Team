@@ -297,35 +297,27 @@ const LicNewSchedules = ({ timeSlotData = {}, onBackClick }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
-  
+    setSuccess(''); // Now using the correctly defined setSuccess function
+
     try {
       if (!formData.viva_type) {
         throw new Error('Please select a viva type');
       }
-  
-      // Check if each group has required fields
-      for (const group of batchGroups) {
-        if (!group.batch || group.subGroups.length === 0) {
-          throw new Error('Please fill in all batch group details');
-        }
-        
-        // Check if at least one lecturer OR one examiner is selected
-        if (group.lecturers.length === 0 && group.examiners.length === 0) {
-          throw new Error('Each group must have at least one lecturer OR one examiner assigned');
-        }
+
+      if (batchGroups.some(group => !group.batch || group.subGroups.length === 0)) {
+        throw new Error('Please fill in all batch group details');
       }
       
       if (!validateTimeSlots()) {
         throw new Error('One or more group time slots are outside the main time slot range');
       }
-  
+
       setShowConfirmation(true);
+
     } catch (err) {
       setError(err.message || 'Failed to create schedule');
     }
   };
-  
 
 
    // Add new function to handle actual submission
@@ -674,8 +666,8 @@ const LicNewSchedules = ({ timeSlotData = {}, onBackClick }) => {
                         ))}
                       </div>
                     </div>
-                    {group.lecturers.length === 0 && group.examiners.length === 0 && (
-                      <div className="validation-message">Please select at least one lecturer OR one examiner</div>
+                    {group.lecturers.length === 0 && (
+                      <div className="validation-message">Please select at least one lecturer</div>
                     )}
                   </div>
 
@@ -718,18 +710,11 @@ const LicNewSchedules = ({ timeSlotData = {}, onBackClick }) => {
                         ))}
                       </div>
                     </div>
-                    {group.lecturers.length === 0 && group.examiners.length === 0 && (
-                      <div className="validation-message">Please select at least one lecturer OR one examiner</div>
+                    {group.examiners.length === 0 && (
+                      <div className="validation-message">Please select at least one examiner</div>
                     )}
                   </div>
                 </div>
-
-                {/* Show validation message if both are empty */}
-                {/* {group.lecturers.length === 0 && group.examiners.length === 0 && (
-                  <div className="validation-message centered-message">
-                    Please select at least one lecturer OR one examiner
-                  </div>
-                )} */}
 
                 <div className="form-row">
                   <div className="form-group">

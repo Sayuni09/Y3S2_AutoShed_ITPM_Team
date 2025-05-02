@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/LIC_Styles/Navbar.css';
 import { IconButton, Tooltip, Menu, MenuItem, Avatar } from '@mui/material';
 import { 
+    Search,
     Mail,
     Bell,
     // Settings,
@@ -59,10 +60,10 @@ const [isEmailOpen, setIsEmailOpen] = useState(false);
                 <h2>LIC Dashboard</h2>
             </div>
             <div className="navbar-end">
-                {/* <div className="search-box">
+                <div className="search-box">
                     <Search size={20} className="search-icon" />
                     <input type="text" placeholder="Search..." className="search-input" />
-                </div> */}
+                </div>
                 <div className="navbar-actions">
                     <Tooltip title="Messages">
                         <IconButton className="navbar-icon-button"

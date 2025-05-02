@@ -45,7 +45,7 @@ const Sidebar = ({onNavChange, activeTab }) => {
             dropdown: [
                 { label: 'New', id: 'schedules-new' },
                 { label: 'Accepted', id: 'schedules-Accepted' },
-                // { label: 'Confirmed', id: 'schedules-confirmed' }
+                { label: 'Confirmed', id: 'schedules-confirmed' }
             ]
         },
         { 
