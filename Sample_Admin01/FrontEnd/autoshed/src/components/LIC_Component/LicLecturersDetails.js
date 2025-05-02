@@ -1,3 +1,5 @@
+// LicLecturersDetails.js
+
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Mail, MessageSquare } from 'lucide-react';
 import lecDetailsService from '../../services/LIC_Services/LecDetailsService';
@@ -52,23 +54,22 @@ const LicLecturersDetails = () => {
   }, [lecturerId]);
 
   // Function to open email client with better support
-const handleEmailClick = (email, lecturerName) => {
-  try {
-    // Set up email parameters
-    const subject = encodeURIComponent(`Query regarding ${selectedModule !== 'all' ? selectedModule : 'module'}`);
-    const body = encodeURIComponent(`Dear ${lecturerName},\n\nI would like to inquire about...\n\nRegards,\n[Your Name]`);
-    
-    // Option 1: Open default mail client
-    // window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    
-    // Option 2: Open Gmail specifically (recommended)
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`, '_blank');
-  } catch (error) {
-    console.error("Error opening email client:", error);
-    alert("Could not open email client. Please try again or send email manually to: " + email);
-  }
-};
-
+  const handleEmailClick = (email, lecturerName) => {
+    try {
+      // Set up email parameters
+      const subject = encodeURIComponent(`Query regarding ${selectedModule !== 'all' ? selectedModule : 'module'}`);
+      const body = encodeURIComponent(`Dear ${lecturerName},\n\nI would like to inquire about...\n\nRegards,\n[Your Name]`);
+      
+      // Option 1: Open default mail client
+      // window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      
+      // Option 2: Open Gmail specifically (recommended)
+      window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`, '_blank');
+    } catch (error) {
+      console.error("Error opening email client:", error);
+      alert("Could not open email client. Please try again or send email manually to: " + email);
+    }
+  };
 
   // Function to open WhatsApp
   const handleWhatsAppClick = (phoneNumber) => {
@@ -88,25 +89,25 @@ const handleEmailClick = (email, lecturerName) => {
   });
 
   if (loading) {
-    return <div className="loading">Loading lecturers...</div>;
+    return <div className="lic-loading">Loading lecturers...</div>;
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <div className="lic-error">{error}</div>;
   }
 
   return (
-    <div className="lecturers-container">
-      <div className="header">
+    <div className="lic-lecturers-container">
+      <div className="lic-header">
         <h1>Lecturers Details</h1>
-        {/* <button className="add-button">
+        {/* <button className="lic-add-button">
           <User size={20} />
           Add New Lecturer
         </button> */}
       </div>
 
-      <div className="filters">
-        <div className="search-bar">
+      <div className="lic-filters">
+        <div className="lic-search-bar">
           <Search size={20} />
           <input
             type="text"
@@ -116,7 +117,7 @@ const handleEmailClick = (email, lecturerName) => {
           />
         </div>
 
-        <div className="module-filter">
+        <div className="lic-module-filter">
           <Filter size={20} />
           <select
             value={selectedModule}
@@ -130,28 +131,28 @@ const handleEmailClick = (email, lecturerName) => {
         </div>
       </div>
 
-      <div className="modules-grid">
+      <div className="lic-modules-grid">
         {filteredLecturers.map((moduleData) => (
-          <div key={moduleData.module_code} className="module-card">
-            <h2 className="module-title">{moduleData.module_code}</h2>
-            <div className="lecturers-list">
+          <div key={moduleData.module_code} className="lic-module-card">
+            <h2 className="lic-module-title">{moduleData.module_code}</h2>
+            <div className="lic-lecturers-list">
               {moduleData.lecturers.map(lecturer => (
-                <div key={lecturer.lec_id} className="lecturer-card">
-                  <div className="lecturer-info">
+                <div key={lecturer.lec_id} className="lic-lecturer-card">
+                  <div className="lic-lecturer-info">
                     <h3>{lecturer.lec_name}</h3>
                     <p>{lecturer.lec_email}</p>
                     <p>{lecturer.phone_number}</p>
-                    <div className="contact-actions">
+                    <div className="lic-contact-actions">
                       <button 
-                        className="contact-button email-button"
-                        onClick={() => handleEmailClick(lecturer.lec_email)}
+                        className="lic-contact-button lic-email-button"
+                        onClick={() => handleEmailClick(lecturer.lec_email, lecturer.lec_name)}
                         title={`Send email to ${lecturer.lec_name}`}
                       >
                         <Mail size={18} />
                         <span>Email</span>
                       </button>
                       <button 
-                        className="contact-button whatsapp-button"
+                        className="lic-contact-button lic-whatsapp-button"
                         onClick={() => handleWhatsAppClick(lecturer.phone_number)}
                         title={`Message ${lecturer.lec_name} on WhatsApp`}
                       >
@@ -160,8 +161,8 @@ const handleEmailClick = (email, lecturerName) => {
                       </button>
                     </div>
                   </div>
-                  <div className="lecturer-modules">
-                    <span className="module-tag">{moduleData.module_code}</span>
+                  <div className="lic-lecturer-modules">
+                    <span className="lic-module-tag">{moduleData.module_code}</span>
                   </div>
                 </div>
               ))}
