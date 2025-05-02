@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/free_time_slots";
+const LIC_API_URL = "http://localhost:5000/api/lic";
 
 // Reuse your existing auth header configuration
 const getAuthHeader = () => {
@@ -105,3 +106,40 @@ export const getModules = async () => {
       throw new Error(error.response?.data?.message || "Failed to fetch modules");
     }
   };
+
+export const getLICs = async () => {
+    try {
+        const token = localStorage.getItem("token");
+        console.log("Auth token:", token);
+        console.log("Fetching LICs from:", `${LIC_API_URL}`);
+        
+        const headers = getAuthHeader();
+        console.log("Request headers:", headers);
+        
+        const response = await axios.get(LIC_API_URL, headers);
+        console.log("LICs response:", response);
+        console.log("LICs data:", response.data);
+        
+        if (!response.data || response.data.length === 0) {
+            console.log("No LICs found in response");
+            throw new Error("No LICs found in the system. Please add LICs first.");
+        }
+        
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching LICs:", error);
+        console.error("Error details:", {
+            message: error.message,
+            response: error.response,
+            status: error.response?.status,
+            data: error.response?.data
+        });
+        
+        if (error.response?.status === 404) {
+            throw new Error("No LICs found in the system. Please add LICs first.");
+        }
+        throw new Error(error.response?.data?.message || "Failed to fetch LICs. Please try again.");
+    }
+};
+
+
