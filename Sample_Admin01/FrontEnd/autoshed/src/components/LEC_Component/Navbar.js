@@ -55,7 +55,7 @@ const Navbar = ({ onLogout }) => {
                 <h2>Lecturer Dashboard</h2>
             </div>
             <div className="navbar-end">
-                <div className="search-box">
+                {/* <div className="search-box">
                     <Search size={20} className="search-icon" />
                     <input type="text" placeholder="Search..." className="search-input" />
                 </div>
@@ -87,7 +87,7 @@ const Navbar = ({ onLogout }) => {
                         onClose={() => setIsEmailOpen(false)}
                         userEmail={user.email}
                     />
-                </div>
+                </div> */}
                 <div className="profile-section">
                     {/* <div className="profile-info">
                         <div className="profile-name">{user.name || 'Lecturer'}</div>
